@@ -9,14 +9,16 @@ class Team extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+    /*
+     * Available fields:
+     * integer id
+     * string name
+     * string|null password
+     * boolean isGM
+     * datetime|null start_date
+     * datetime|null end_date
      */
-    protected $fillable = [
-        'name', 'password',
-    ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -33,6 +35,7 @@ class Team extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'isGM' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime'
     ];
@@ -44,5 +47,15 @@ class Team extends Authenticatable
     public function rooms()
     {
         return $this->belongsToMany('App\Room', 'rooms_teams');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
+    public function enigmas()
+    {
+        return $this->belongsToMany('App\Enigmas', 'enigmas_teams');
     }
 }
