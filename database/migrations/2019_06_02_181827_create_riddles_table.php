@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateEnigmasEnigmasTable extends Migration
+class CreateRiddlesTable extends Migration
 {
 
     /**
@@ -13,10 +13,12 @@ class CreateEnigmasEnigmasTable extends Migration
      */
     public function up()
     {
-        Schema::create('enigmas_enigmas', function (Blueprint $table) {
+        Schema::create('riddles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned()->index('fk_enigmas_has_enigmas_enigmas_idx');
-            $table->integer('child_id')->unsigned()->index('fk_enigmas_has_enigmas_enigmas1_idx');
+            $table->string('name');
+            $table->string('url')->nullable();
+            $table->string('code')->nullable();
+            $table->boolean('disabled')->default(0);
         });
     }
 
@@ -28,7 +30,7 @@ class CreateEnigmasEnigmasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('enigmas_enigmas');
+        Schema::drop('riddles');
     }
 
 }

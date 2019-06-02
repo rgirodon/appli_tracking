@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Enigma extends Model
+class Riddle extends Model
 {
     /*
      * Available fields:
@@ -23,6 +23,6 @@ class Enigma extends Model
 
     public function teams()
     {
-        return $this->belongsToMany('App\Team', 'enigmas_teams');
+        return $this->belongsToMany('App\Team', 'riddles_teams');
     }
 }

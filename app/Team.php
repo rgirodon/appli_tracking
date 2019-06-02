@@ -54,8 +54,8 @@ class Team extends Authenticatable
         return $this->hasMany('App\Message');
     }
 
-    public function enigmas()
+    public function riddles()
     {
-        return $this->belongsToMany('App\Enigmas', 'enigmas_teams');
+        return $this->belongsToMany('App\Riddle', 'riddles_teams');
     }
 }
