@@ -11,8 +11,18 @@ class MessengerPolicy
     use HandlesAuthorization;
 
 
-    public function sendmessage(Team $team, Room $room)
+    public function roomaccess(Team $team, Room $room)
     {
         return $room->teams()->where('teams.id', $team->id)->exists();
+    }
+
+    public function sendmessage(Team $team, Room $room)
+    {
+        return $this->roomaccess($team, $room);
+    }
+
+    public function getmessages(Team $team, Room $room)
+    {
+        return $this->roomaccess($team, $room);
     }
 }

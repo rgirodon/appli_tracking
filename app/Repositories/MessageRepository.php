@@ -25,4 +25,10 @@ class MessageRepository
 
         $msg->saveOrFail();
     }
+
+
+    public static function getMessages(Room $room)
+    {
+        return $room->messages()->get();
+    }
 }

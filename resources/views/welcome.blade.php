@@ -96,5 +96,7 @@
                 </div>
             </div>
         </div>
+
+        @include('messenger.messages')
     </body>
 </html>

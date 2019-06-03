@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 
 Route::post('msg/send/{room}', 'MessengerController@sendMessage');
+Route::get('msg/{room}', 'MessengerController@getMessages');
 
 Auth::routes();
 

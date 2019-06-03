@@ -31,4 +31,23 @@ class MessengerController extends Controller
             ]
         ]);
     }
+
+
+    public function GetMessages($room_id, Request $request)
+    {
+        $room = Room::findOrFail($room_id);
+
+        $this->authorize('getmessages', $room);
+
+        $messages = MessageRepository::getMessages($room);
+
+        return JsonResponse::create([
+            'status' => [
+                'type' => 'success',
+                'message' => 'Message récupéré avec succès',
+                'display' => false
+            ],
+            'messages' => $messages
+        ]);
+    }
 }
