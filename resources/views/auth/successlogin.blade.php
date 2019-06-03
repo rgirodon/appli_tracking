@@ -19,19 +19,7 @@
 
 @section('content')
     <div class="container box">
-        {{--<h3 align="center">Simple Login System in Laravel</h3><br />--}}
-
-        @if(isset(Auth::user()->name))
-            <div class="alert alert-danger success-block">
-                <strong>Welcome {{ Auth::user()->name }}</strong>
-                <br/>
-                <a href="{{ url('/gm/logout') }}">Logout</a>
-            </div>
-        @else
-            <script>window.location = "/gm";</script>
-        @endif
-
-        <br/>
+        <h3 align="center"><strong>Vie ta vie {{ Auth::user()->name }} !</strong></h3>
     </div>
 @endsection
 
@@ -49,6 +37,8 @@
                 </a>
             </div>
         </li>
+    @else
+        <script>window.location = "gm/login";</script>
     @endif
 @endsection
 

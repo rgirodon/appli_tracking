@@ -17,9 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/gm', 'GameMasterController@index');
+Route::get('/gm/login', 'GameMasterController@index');
 Route::post('/gm/checklogin', 'GameMasterController@checklogin');
-Route::get('gm/successlogin', 'GameMasterController@successlogin');
+Route::get('gm', 'GameMasterController@successlogin');
 Route::get('gm/logout', 'GameMasterController@logout');
 Auth::routes();
 
