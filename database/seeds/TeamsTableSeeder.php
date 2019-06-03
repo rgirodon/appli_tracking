@@ -17,5 +17,10 @@ class TeamsTableSeeder extends Seeder
             'password' => bcrypt('1234'),
             'isGM' => true,
         ]);
+        DB::table('teams')->insert([
+            'name' => 'didier',
+            'password' => bcrypt('1234'),
+            'isGM' => false,
+        ]);
     }
 }

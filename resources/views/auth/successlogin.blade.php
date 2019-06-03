@@ -37,8 +37,6 @@
                 </a>
             </div>
         </li>
-    @else
-        <script>window.location = "gm/login";</script>
     @endif
 @endsection
 
