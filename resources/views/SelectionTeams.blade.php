@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mon joli site</title>
-    {!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css') !!}
-		{!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css') !!}
-		<!--[if lt IE 9]>
-    {{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
-    {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
-    <![endif]-->
-    <style> textarea { resize: none; } </style>
-</head>
-<body>
+@extends('layouts.app')
+
+{{--@section('content')
 <form method="Post">
     <select name="taskOption">
         <option value="Jaune">Jaune</option>
@@ -34,5 +21,58 @@
     </select>
     <input type="submit" value="Submit the form" />
 </form>
-</body>
-</html>
+@endsection--}}
+
+@section('logout')
+    @if(isset(Auth::user()->name))
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url('/joueur/logout') }}">
+                    {{ __('Logout') }}
+                </a>
+            </div>
+        </li>
+    @endif
+@endsection
+
+@section('content')
+    <div class=" container-fluid btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-success">
+            <input type="radio" checked>Rouge
+        </label>
+        <label class="btn btn-success">
+            <input type="radio">Vert
+        </label>
+        <label class="btn btn-success">
+            <input type="radio">Bleu
+        </label>
+        <label class="btn btn-success">
+            <input type="radio">Jaune
+        </label>
+        <label class="btn btn-success">
+            <input type="radio">Orange
+        </label>
+    </div>
+    <div class=" container-fluid btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-success">
+            <input type="radio" checked>1
+        </label>
+        <label class="btn btn-success">
+            <input type="radio" checked>2
+        </label>
+        <label class="btn btn-success">
+            <input type="radio" checked>3
+        </label>
+        <label class="btn btn-success">
+            <input type="radio" checked>4
+        </label>
+        <label class="btn btn-success">
+            <input type="radio" checked>5
+        </label>
+    </div>
+@endsection

@@ -13,6 +13,7 @@
 
 Route::get('/', 'SelectionTeamsController@index');
 Route::post('/', 'SelectionTeamsController@postForm');
+Route::get('joueur/logout', 'SelectionTeamsController@logout');
 
 Route::get('/gm/login', 'GameMasterController@index');
 Route::post('/gm/checklogin', 'GameMasterController@checklogin');

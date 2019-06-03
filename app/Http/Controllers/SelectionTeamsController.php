@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class SelectionTeamsController extends Controller
@@ -20,4 +18,9 @@ class SelectionTeamsController extends Controller
         return view('confirm');
     }
 
+    function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }
