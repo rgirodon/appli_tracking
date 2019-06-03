@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('msg/send/{room}', 'MessengerController@sendMessage');
