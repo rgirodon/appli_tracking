@@ -25,7 +25,7 @@ class GameMasterController extends Controller
         );
 
         if (Auth::attempt($user_data)) {
-            return redirect('gm/successlogin');
+            return redirect('gm');
         } else {
             return back()->with('error', 'Wrong Login Details');
         }
@@ -40,6 +40,6 @@ class GameMasterController extends Controller
     function logout()
     {
         Auth::logout();
-        return redirect('gm');
+        return redirect('gm/login');
     }
 }
