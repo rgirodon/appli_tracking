@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/onglets', function () {
+    return view('tabs', ['title' => 'Onglets']);
+});
