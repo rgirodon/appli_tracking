@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/gm', 'GameMasterController@index');
+Route::post('/gm/checklogin', 'GameMasterController@checklogin');
+Route::get('gm/successlogin', 'GameMasterController@successlogin');
+Route::get('gm/logout', 'GameMasterController@logout');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
