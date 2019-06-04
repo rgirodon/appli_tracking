@@ -16,12 +16,27 @@ class MessageTemplate {
     }
 
     createMessage(message) {
+        const date = new Date(message.date);
         const element = document.importNode(this.template.content, true);
         element.querySelector(this.nameSelector).textContent = message.author;
-        element.querySelector(this.dateSelector).textContent = message.date;
+        element.querySelector(this.dateSelector).textContent = MessageTemplate.renderTime(date);
         element.querySelector(this.contentSelector).textContent = message.content;
-        // TODO Align left or right
+        if(message.self)
+            element.querySelector('.message').classList.add('self');
         return element;
+    }
+
+    static renderTime(date) {
+        let min = date.getHours() * 60 + date.getMinutes();
+        const hour = Math.floor(min / 60);
+        min %= 60;
+        return this.renderWithZero(hour) + ':' + this.renderWithZero(min);
+    }
+
+    static renderWithZero(number) {
+        if(number < 10)
+            return '0' + number;
+        return '' + number;
     }
 }
 

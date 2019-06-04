@@ -38,6 +38,6 @@ $(document).ready(function () {
     const MessageAPI = require('./messenger/MessageAPI').MessageAPI;
 
 
-    window.msg = new MessageAPI(1, '#collection', "#message-template", "#message-form");
+    window.msg = new MessageAPI(1, '.collection', "#message-template", "#message-form");
 
 });

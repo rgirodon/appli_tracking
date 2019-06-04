@@ -1,12 +1,19 @@
 <template id="message-template">
-    <div>
-        <span class="name">Name</span>
-        <span class="date">Date</span>
-        <div class="content">Content</div>
+    <div class="message">
+        <div>
+            <span class="msg-head">
+                <span class="name">Name</span>
+                à
+                <span class="date">Date</span>
+            </span>
+        </div>
+        <div>
+            <div class="content">Content</div>
+        </div>
     </div>
 </template>
 
-<div id="collection">
+<div class="collection">
 
 </div>
 
