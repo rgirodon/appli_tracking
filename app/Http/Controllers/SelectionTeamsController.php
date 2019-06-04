@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use App\Team;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -10,12 +11,40 @@ class SelectionTeamsController extends Controller
 {
     public function index()
     {
-        return view('SelectionTeams');
+        return view('auth.loginTeams');
     }
 
-    public function postForm(ContactRequest $request)
+    function checklogin(Request $request)
     {
-        return view('confirm');
+        $this->validate($request, [
+            'color' => 'required',
+            'num' => 'required'
+        ]);
+
+
+        $name = $request->input('color') . $request->input('num');
+
+        $user = Team::where('name', '=', $name)->first();
+
+        if (is_null($user)) {
+            $user = new Team();
+            $user->name = $name;
+            $user->isGM = false;
+            $user->saveOrFail();
+            //toDO creer la room et la lier avec les GM.
+        }
+        Auth::login($user);
+        return redirect('/');
+    }
+
+    function successlogin()
+    {
+        if (Auth::check())
+            return view('auth.successloginTeams');
+        else if (Auth::check())
+            return redirect('/');
+        else
+            return redirect('player/login');
     }
 
     function logout()
