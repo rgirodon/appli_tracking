@@ -31,9 +31,5 @@ require('./bootstrap');
 //     el: '#app',
 // });
 
-
 // Custom
-window.addTab = require('./tabs').addTab;
-window.showTab = require('./tabs').showTab;
-window.tab = require('./tabs').tab;
-window.contentTab = require('./tabs').contentTab;
+TabList = require('./tabs').TabList;
