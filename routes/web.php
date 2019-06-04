@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/onglets', function () {
     return view('tabs', ['title' => 'Onglets']);
 });
+
+Route::get('/riddles', function () {
+    return view('riddlesDisplay', ['title' => 'Énigmes']);
+});
