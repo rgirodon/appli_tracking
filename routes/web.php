@@ -14,6 +14,9 @@
 Route::get('/', 'SelectionTeamsController@index');
 Route::post('/', 'SelectionTeamsController@postForm');
 
+Route::get('/onglets', function () {
+    return view('tabs', ['title' => 'Onglets']);
+});
 Route::get('/gm/login', 'GameMasterController@index');
 Route::post('/gm/checklogin', 'GameMasterController@checklogin');
 Route::get('gm', 'GameMasterController@successlogin');

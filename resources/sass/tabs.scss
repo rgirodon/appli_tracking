@@ -1,0 +1,13 @@
+@keyframes flicker {
+  from {
+    background-color: $tab-bg;
+  }
+
+  to {
+    background-color: $tab-notify-bg;
+  }
+}
+
+.nav-link.notifying {
+  animation: flicker alternate infinite 1s;
+}
