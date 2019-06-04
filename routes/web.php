@@ -18,3 +18,6 @@ Route::get('/gm/login', 'GameMasterController@index');
 Route::post('/gm/checklogin', 'GameMasterController@checklogin');
 Route::get('gm', 'GameMasterController@successlogin');
 Route::get('gm/logout', 'GameMasterController@logout');
+
+Route::get('/validationEnigme', 'ValidationEnigmeController@Index');
+Route::get('/validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
