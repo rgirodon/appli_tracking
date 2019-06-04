@@ -12,6 +12,7 @@ use App\Repositories\MessageRepository;
 use App\Room;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessengerController extends Controller
 {
@@ -39,7 +40,16 @@ class MessengerController extends Controller
 
         $this->authorize('getmessages', $room);
 
-        $messages = MessageRepository::getMessages($room);
+        $user_id = Auth::user()->id;
+
+        $messages = MessageRepository::getMessages($room)->map(function ($msg) use ($user_id) {
+            return [
+                'date' => $msg->date,
+                'content' => $msg->content,
+                'author' => $msg->author->name,
+                'self' => $msg->team_id == $user_id
+            ];
+        });
 
         return JsonResponse::create([
             'status' => [

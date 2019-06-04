@@ -20,7 +20,7 @@ class Message extends Model
 
     public function author()
     {
-        return $this->belongsTo('App\Team');
+        return $this->belongsTo('App\Team', 'team_id');
     }
 
     public function room()
