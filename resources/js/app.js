@@ -31,5 +31,22 @@ require('./bootstrap');
 //     el: '#app',
 // });
 
+// jQuery-ui
+require('jquery-ui/ui/widgets/sortable');
+$(document).on("mousedown", function (e1) {
+    $(document).one("mouseup", function (e2) {
+        if (e1.which === 2 && e1.target === e2.target) {
+            const e3 = $.event.fix(e2);
+            e3.type = "middleclick";
+            $(e2.target).trigger(e3);
+            if (e3.isDefaultPrevented()) {
+                e2.preventDefault();
+            }
+
+        }
+    });
+});
+
 // Custom
 TabList = require('./tabs').TabList;
+

@@ -2,8 +2,6 @@
 
 @section('content')
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <div id="tablist"></div>
     <script>
         const tablist = new TabList('#tablist');

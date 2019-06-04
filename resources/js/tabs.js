@@ -1,5 +1,5 @@
 /*!
-Bootstrap Tabs v0.1
+Bootstrap Tabs v0.2
 
 (c) Copyright 2019 Pierre Giraud
 
@@ -82,7 +82,7 @@ class TabList {
             root.append($('<ul>', {class: 'nav nav-tabs'})
                 .attr('role', 'tablist')
                 .sortable({
-                    connectWith: '.nav-tabs',
+                    connectWith: root.find('.nav-tabs'),
                     axis: 'x'
                 }));
             root.append($('<div>', {class: 'tab-content'}))
@@ -138,6 +138,13 @@ class TabList {
 
             if (settings.closeable) {
                 let cross = $('<span>', {class: 'ui-icon ui-icon-closethick ml-2'});
+                cross.click(function (e) {
+                    let tab = $(this).parent();
+                    if (tab.hasClass('active'))
+                        $('#tablist').find('ul').children().first().children().first().tab('show');
+                    $('#tablist').find('#' + tab.prop('id').match('(nav-.*)-tab')[1]).remove();
+                    tab.remove();
+                });
                 newTabLink.append(cross);
                 newTabLink.addClass('pr-2');
             }
@@ -146,20 +153,14 @@ class TabList {
             newTab.click(function () {
                 $(this).find('a').removeClass('notifying');
             });
-            newTab.mousedown(function (e) {
-                    switch (e.button) {
-                        case 1:
-                            if ($(this).hasClass('closeable')) {
-                                if ($(this).children().first().hasClass('active'))
-                                    $('#tablist').find('ul').children().first().children().first().tab('show');
-                                $('#tablist').find('#' + $(this).children().first().prop('id').match('(nav-.*)-tab')[1]).remove();
-                                this.remove();
-                            } else {
-                                e.preventDefault();
-                            }
-                            break;
-                        default:
-                            break;
+            newTab.on('middleclick', function (e) {
+                    if ($(this).hasClass('closeable')) {
+                        if ($(this).children().first().hasClass('active'))
+                            $('#tablist').find('ul').children().first().children().first().tab('show');
+                        $('#tablist').find('#' + $(this).children().first().prop('id').match('(nav-.*)-tab')[1]).remove();
+                        this.remove();
+                    } else {
+                        e.preventDefault();
                     }
                 }
             );
