@@ -167,7 +167,6 @@
         var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
         var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
         var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-        var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
         module.exports = function xhrAdapter(config) {
             return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -179,24 +178,6 @@
                 }
 
                 var request = new XMLHttpRequest();
-                var loadEvent = 'onreadystatechange';
-                var xDomain = false;
-
-                // For IE 8/9 CORS support
-                // Only supports POST and GET calls and doesn't returns the response headers.
-                // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-                if (true &&
-                    typeof window !== 'undefined' &&
-                    window.XDomainRequest && !('withCredentials' in request) &&
-                    !isURLSameOrigin(config.url)) {
-                    request = new window.XDomainRequest();
-                    loadEvent = 'onload';
-                    xDomain = true;
-                    request.onprogress = function handleProgress() {
-                    };
-                    request.ontimeout = function handleTimeout() {
-                    };
-                }
 
                 // HTTP basic authentication
                 if (config.auth) {
@@ -211,8 +192,8 @@
                 request.timeout = config.timeout;
 
                 // Listen for ready state
-                request[loadEvent] = function handleLoad() {
-                    if (!request || (request.readyState !== 4 && !xDomain)) {
+                request.onreadystatechange = function handleLoad() {
+                    if (!request || request.readyState !== 4) {
                         return;
                     }
 
@@ -229,15 +210,26 @@
                     var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
                     var response = {
                         data: responseData,
-                        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-                        status: request.status === 1223 ? 204 : request.status,
-                        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+                        status: request.status,
+                        statusText: request.statusText,
                         headers: responseHeaders,
                         config: config,
                         request: request
                     };
 
                     settle(resolve, reject, response);
+
+                    // Clean up request
+                    request = null;
+                };
+
+                // Handle browser request cancellation (as opposed to a manual cancellation)
+                request.onabort = function handleAbort() {
+                    if (!request) {
+                        return;
+                    }
+
+                    reject(createError('Request aborted', config, 'ECONNABORTED', request));
 
                     // Clean up request
                     request = null;
@@ -359,6 +351,7 @@
         var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
         var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
         var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/axios/lib/core/Axios.js");
+        var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
         var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/axios/lib/defaults.js");
 
         /**
@@ -388,7 +381,7 @@
 
 // Factory for creating new instances
         axios.create = function create(instanceConfig) {
-            return createInstance(utils.merge(defaults, instanceConfig));
+            return createInstance(mergeConfig(axios.defaults, instanceConfig));
         };
 
 // Expose Cancel & CancelToken
@@ -541,10 +534,11 @@
         "use strict";
 
 
-        var defaults = __webpack_require__(/*! ./../defaults */ "./node_modules/axios/lib/defaults.js");
         var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+        var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
         var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/axios/lib/core/InterceptorManager.js");
         var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/axios/lib/core/dispatchRequest.js");
+        var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
 
         /**
          * Create a new instance of Axios
@@ -568,13 +562,14 @@
             /*eslint no-param-reassign:0*/
             // Allow for axios('example/url'[, config]) a la fetch API
             if (typeof config === 'string') {
-                config = utils.merge({
-                    url: arguments[0]
-                }, arguments[1]);
+                config = arguments[1] || {};
+                config.url = arguments[0];
+            } else {
+                config = config || {};
             }
 
-            config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
-            config.method = config.method.toLowerCase();
+            config = mergeConfig(this.defaults, config);
+            config.method = config.method ? config.method.toLowerCase() : 'get';
 
             // Hook up interceptors middleware
             var chain = [dispatchRequest, undefined];
@@ -593,6 +588,11 @@
             }
 
             return promise;
+        };
+
+        Axios.prototype.getUri = function getUri(config) {
+            config = mergeConfig(this.defaults, config);
+            return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
         };
 
 // Provide aliases for supported request methods
@@ -843,9 +843,94 @@
             if (code) {
                 error.code = code;
             }
+
             error.request = request;
             error.response = response;
+            error.isAxiosError = true;
+
+            error.toJSON = function () {
+                return {
+                    // Standard
+                    message: this.message,
+                    name: this.name,
+                    // Microsoft
+                    description: this.description,
+                    number: this.number,
+                    // Mozilla
+                    fileName: this.fileName,
+                    lineNumber: this.lineNumber,
+                    columnNumber: this.columnNumber,
+                    stack: this.stack,
+                    // Axios
+                    config: this.config,
+                    code: this.code
+                };
+            };
             return error;
+        };
+
+
+        /***/
+    }),
+
+    /***/ "./node_modules/axios/lib/core/mergeConfig.js":
+    /*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/mergeConfig.js ***!
+  \****************************************************/
+    /*! no static exports found */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        "use strict";
+
+
+        var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+
+        /**
+         * Config-specific merge-function which creates a new config-object
+         * by merging two configuration objects together.
+         *
+         * @param {Object} config1
+         * @param {Object} config2
+         * @returns {Object} New object resulting from merging config2 to config1
+         */
+        module.exports = function mergeConfig(config1, config2) {
+            // eslint-disable-next-line no-param-reassign
+            config2 = config2 || {};
+            var config = {};
+
+            utils.forEach(['url', 'method', 'params', 'data'], function valueFromConfig2(prop) {
+                if (typeof config2[prop] !== 'undefined') {
+                    config[prop] = config2[prop];
+                }
+            });
+
+            utils.forEach(['headers', 'auth', 'proxy'], function mergeDeepProperties(prop) {
+                if (utils.isObject(config2[prop])) {
+                    config[prop] = utils.deepMerge(config1[prop], config2[prop]);
+                } else if (typeof config2[prop] !== 'undefined') {
+                    config[prop] = config2[prop];
+                } else if (utils.isObject(config1[prop])) {
+                    config[prop] = utils.deepMerge(config1[prop]);
+                } else if (typeof config1[prop] !== 'undefined') {
+                    config[prop] = config1[prop];
+                }
+            });
+
+            utils.forEach([
+                'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+                'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+                'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'maxContentLength',
+                'validateStatus', 'maxRedirects', 'httpAgent', 'httpsAgent', 'cancelToken',
+                'socketPath'
+            ], function defaultToConfig2(prop) {
+                if (typeof config2[prop] !== 'undefined') {
+                    config[prop] = config2[prop];
+                } else if (typeof config1[prop] !== 'undefined') {
+                    config[prop] = config1[prop];
+                }
+            });
+
+            return config;
         };
 
 
@@ -873,8 +958,7 @@
          */
         module.exports = function settle(resolve, reject, response) {
             var validateStatus = response.config.validateStatus;
-            // Note: status is not exposed by XDomainRequest
-            if (!response.status || !validateStatus || validateStatus(response.status)) {
+            if (!validateStatus || validateStatus(response.status)) {
                 resolve(response);
             } else {
                 reject(createError(
@@ -950,12 +1034,13 @@
 
             function getDefaultAdapter() {
                 var adapter;
-                if (typeof XMLHttpRequest !== 'undefined') {
-                    // For browsers use XHR adapter
-                    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
-                } else if (typeof process !== 'undefined') {
+                // Only Node.JS has a process variable that is of [[Class]] process
+                if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
                     // For node use HTTP adapter
                     adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
+                } else if (typeof XMLHttpRequest !== 'undefined') {
+                    // For browsers use XHR adapter
+                    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
                 }
                 return adapter;
             }
@@ -964,6 +1049,7 @@
                 adapter: getDefaultAdapter(),
 
                 transformRequest: [function transformRequest(data, headers) {
+                    normalizeHeaderName(headers, 'Accept');
                     normalizeHeaderName(headers, 'Content-Type');
                     if (utils.isFormData(data) ||
                         utils.isArrayBuffer(data) ||
@@ -1061,56 +1147,6 @@
         /***/
     }),
 
-    /***/ "./node_modules/axios/lib/helpers/btoa.js":
-    /*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-    /*! no static exports found */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        "use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-        function E() {
-            this.message = 'String contains an invalid character';
-        }
-
-        E.prototype = new Error;
-        E.prototype.code = 5;
-        E.prototype.name = 'InvalidCharacterError';
-
-        function btoa(input) {
-            var str = String(input);
-            var output = '';
-            for (
-                // initialize result and counter
-                var block, charCode, idx = 0, map = chars;
-                // if the next str index does not exist:
-                //   change the mapping table to "="
-                //   check if d has no fractional digits
-                str.charAt(idx | 0) || (map = '=', idx % 1);
-                // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-                output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-            ) {
-                charCode = str.charCodeAt(idx += 3 / 4);
-                if (charCode > 0xFF) {
-                    throw new E();
-                }
-                block = block << 8 | charCode;
-            }
-            return output;
-        }
-
-        module.exports = btoa;
-
-
-        /***/
-    }),
-
     /***/ "./node_modules/axios/lib/helpers/buildURL.js":
     /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1173,6 +1209,11 @@
             }
 
             if (serializedParams) {
+                var hashmarkIndex = url.indexOf('#');
+                if (hashmarkIndex !== -1) {
+                    url = url.slice(0, hashmarkIndex);
+                }
+
                 url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
             }
 
@@ -1532,7 +1573,7 @@
 
 
         var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-        var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+        var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
         /*global toString:true*/
 
@@ -1708,9 +1749,13 @@
          *
          * react-native:
          *  navigator.product -> 'ReactNative'
+         * nativescript
+         *  navigator.product -> 'NativeScript' or 'NS'
          */
         function isStandardBrowserEnv() {
-            if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+            if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                navigator.product === 'NativeScript' ||
+                navigator.product === 'NS')) {
                 return false;
             }
             return (
@@ -1793,6 +1838,33 @@
         }
 
         /**
+         * Function equal to merge with the difference being that no reference
+         * to original objects is kept.
+         *
+         * @see merge
+         * @param {Object} obj1 Object to merge
+         * @returns {Object} Result of all merge properties
+         */
+        function deepMerge(/* obj1, obj2, obj3, ... */) {
+            var result = {};
+
+            function assignValue(val, key) {
+                if (typeof result[key] === 'object' && typeof val === 'object') {
+                    result[key] = deepMerge(result[key], val);
+                } else if (typeof val === 'object') {
+                    result[key] = deepMerge({}, val);
+                } else {
+                    result[key] = val;
+                }
+            }
+
+            for (var i = 0, l = arguments.length; i < l; i++) {
+                forEach(arguments[i], assignValue);
+            }
+            return result;
+        }
+
+        /**
          * Extends object a by mutably adding to it the properties of object b.
          *
          * @param {Object} a The object to be extended
@@ -1830,9 +1902,33 @@
             isStandardBrowserEnv: isStandardBrowserEnv,
             forEach: forEach,
             merge: merge,
+            deepMerge: deepMerge,
             extend: extend,
             trim: trim
         };
+
+
+        /***/
+    }),
+
+    /***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+    /*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+    /*! no static exports found */
+    /***/ (function (module, exports) {
+
+        /*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+        module.exports = function isBuffer(obj) {
+            return obj != null && obj.constructor != null &&
+                typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+        }
 
 
         /***/
@@ -6281,39 +6377,6 @@
 
         }));
 //# sourceMappingURL=bootstrap.js.map
-
-
-        /***/
-    }),
-
-    /***/ "./node_modules/is-buffer/index.js":
-    /*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-    /*! no static exports found */
-    /***/ (function (module, exports) {
-
-        /*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-        module.exports = function (obj) {
-            return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-        }
-
-        function isBuffer(obj) {
-            return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-        }
-
-// For Node v0.10 support. Remove this eventually.
-        function isSlowBuffer(obj) {
-            return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-        }
 
 
         /***/
@@ -37004,10 +37067,7 @@
 // Custom
 
 
-        window.addTab = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").addTab;
-        window.showTab = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").showTab;
-        window.tab = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").tab;
-        window.contentTab = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").contentTab;
+        TabList = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").TabList;
 
         /***/
     }),
@@ -37079,27 +37139,294 @@
     /*! no static exports found */
     /***/ (function (module, exports) {
 
-        function addTab(name) {
-            $('#nav-tab').append('<a class="nav-item nav-link" id="nav-' + name + '-tab" data-toggle="tab" href="#nav-' + name + '" role="tab" aria-controls="nav-' + name + '" aria-selected="true">' + name + '</a>');
-            $('#nav-tabContent').append('<div class="tab-pane " id="nav-' + name + '" role="tabpanel" aria-labelledby="nav-' + name + '-tab"></div>');
+        function _classCallCheck(instance, Constructor) {
+            if (!(instance instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+            }
         }
 
-        function showTab(n) {
-            $('#nav-tab a:nth-child(' + n + ')').tab('show');
+        function _defineProperties(target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
+                descriptor.enumerable = descriptor.enumerable || false;
+                descriptor.configurable = true;
+                if ("value" in descriptor) descriptor.writable = true;
+                Object.defineProperty(target, descriptor.key, descriptor);
+            }
         }
 
-        function tab(n) {
-            return $('#nav-tab a:nth-child(' + n + ')');
+        function _createClass(Constructor, protoProps, staticProps) {
+            if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+            if (staticProps) _defineProperties(Constructor, staticProps);
+            return Constructor;
         }
 
-        function contentTab(n) {
-            return $('#nav-tabContent div:nth-child(' + n + ')');
+        /*!
+Bootstrap Tabs v0.1
+
+(c) Copyright 2019 Pierre Giraud
+
+Licensed under the MIT license:
+    http://www.opensource.org/licenses/mit-license.php
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ */
+        var lang_en = {
+            default_title: 'New tab'
+        };
+        var lang_fr = {
+            default_title: 'Nouvel onglet'
+        };
+        var tab_lang;
+
+        switch (document.documentElement.lang) {
+            case 'fr':
+                tab_lang = lang_fr;
+                break;
+
+            case 'en':
+            default:
+                tab_lang = lang_en;
         }
 
-        exports.addTab = addTab;
-        exports.showTab = showTab;
-        exports.tab = tab;
-        exports.contentTab = contentTab;
+        function str2id(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f\W]/g, "") // remove accentuation and non-word character
+                .toLowerCase();
+        }
+
+        var Tab =
+            /*#__PURE__*/
+            function () {
+                function Tab(node, name, text) {
+                    _classCallCheck(this, Tab);
+
+                    this.node = node;
+                    node.click(function () {
+                        notify(false);
+                    });
+                }
+
+                _createClass(Tab, [{
+                    key: "notify",
+                    value: function notify() {
+                        var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+                        if (b) {
+                            node.addClass('notifying');
+                        } else {
+                            node.removeClass('notifying');
+                        }
+                    }
+                }]);
+
+                return Tab;
+            }();
+
+        var TabList =
+            /*#__PURE__*/
+            function () {
+                /**
+                 * Initializes a TabList on a given node.
+                 * @param root Root node of the list,as jQuery object or id string (e.g. '#taglist')
+                 */
+                function TabList(root) {
+                    _classCallCheck(this, TabList);
+
+                    if (!(root instanceof jQuery)) {
+                        if (typeof root !== 'string') throw 'Invalid parameter in constructor of TabList.';
+                        root = $(root);
+                    }
+
+                    var navlist = root.find('.nav-tabs');
+
+                    if (navlist.length === 0) {
+                        root.append($('<ul>', {
+                            "class": 'nav nav-tabs'
+                        }).attr('role', 'tablist').sortable({
+                            connectWith: '.nav-tabs',
+                            axis: 'x'
+                        }));
+                        root.append($('<div>', {
+                            "class": 'tab-content'
+                        }));
+                    } else {
+                        navlist.sortable({
+                            connectWith: root.find('.nav-tabs')
+                        });
+                    }
+
+                    this.root = root;
+                }
+
+                /**
+                 * Add a tab with several possible options.
+                 * <ul>
+                 *     <li>title : string (default : default_title) => the name shown on the tab</li>
+                 *     <li>closeable : boolean (default : false) => if the tab can be closed</li>
+                 *     <li>active : boolean (default : false) => if the tab is currently active</li>
+                 *     <li>id : string (default : 'nav-{title}-tab) => the id of the tab</li>
+                 *     <li>position : 'begin', 'end' or a number (default : 'end') => the position of the tab</li>
+                 * </ul>
+                 * @param options Struct of the options of the new tab.
+                 */
+
+
+                _createClass(TabList, [{
+                    key: "addTab",
+                    value: function addTab(options) {
+                        var settings = $.extend({
+                            title: tab_lang.default_title,
+                            closeable: false,
+                            active: false,
+                            position: 'end'
+                        }, options);
+                        if (settings.position === 'end') settings.position = this.root.find('ul').children().length; else if (settings.position === 'begin') settings.position = 0; else settings.position = Math.min(settings.position, this.root.find('ul').children().length);
+
+                        if (!settings.id) {
+                            settings.id = 'nav-' + str2id(settings.title) + '-tab';
+                        } else {
+                            settings.id = 'nav-' + str2id(settings.id) + '-tab';
+                        }
+
+                        if (this.root.find('#' + settings.id).length === 0) {
+                            var newTab = $('<li>', {
+                                "class": 'nav-item'
+                            }).addClass(settings.closeable ? 'closeable' : '');
+                            var newTabLink = $('<a>', {
+                                "class": 'nav-link',
+                                id: settings.id,
+                                href: '#' + settings.id.match('(nav-.*)-tab')[1]
+                            }).attr('role', 'tab').attr('data-toggle', 'tab').attr('aria-controls', settings.id.match('(nav-.*)-tab')[1]).text(settings.title);
+
+                            if (settings.closeable) {
+                                var cross = $('<span>', {
+                                    "class": 'ui-icon ui-icon-closethick ml-2'
+                                });
+                                newTabLink.append(cross);
+                                newTabLink.addClass('pr-2');
+                            }
+
+                            newTab.append(newTabLink);
+                            newTab.click(function () {
+                                $(this).find('a').removeClass('notifying');
+                            });
+                            newTab.mousedown(function (e) {
+                                switch (e.button) {
+                                    case 1:
+                                        if ($(this).hasClass('closeable')) {
+                                            if ($(this).children().first().hasClass('active')) $('#tablist').find('ul').children().first().children().first().tab('show');
+                                            $('#tablist').find('#' + $(this).children().first().prop('id').match('(nav-.*)-tab')[1]).remove();
+                                            this.remove();
+                                        } else {
+                                            e.preventDefault();
+                                        }
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            });
+                            var newTabContent = $('<div>', {
+                                "class": 'tab-pane',
+                                id: settings.id.match('(nav-.*)-tab')[1]
+                            }).attr('role', 'tabpanel').attr('aria-labelledby', settings.id);
+                            if (settings.position === 0) this.root.find('ul').prepend(newTab); else this.root.find('li:nth-child(' + settings.position + ')').after(newTab);
+                            this.root.find('.tab-content').append(newTabContent);
+
+                            if (settings.active) {
+                                newTabLink.tab('show');
+                            }
+                        }
+                    }
+                    /**
+                     * Returns the nth tab of this TabList.
+                     * @param n the position of the tab
+                     * @returns {*|jQuery|Array} nth tab of this TabList
+                     */
+
+                }, {
+                    key: "tab",
+                    value: function tab(n) {
+                        return this.root.find('li:nth-child(' + n + ') a');
+                    }
+                    /**
+                     * Shows the nth tab of this TabList. Same as left-clicking on it.
+                     * @param n the position of the tab
+                     */
+
+                }, {
+                    key: "showTab",
+                    value: function showTab(n) {
+                        this.tab(n).tab('show');
+                    }
+                    /**
+                     * Returns the content root node of the nth tab of this TabList.
+                     * @param n the position of the tab
+                     * @returns {*|jQuery|Array} the content root node of the nth tab of this TabList
+                     */
+
+                }, {
+                    key: "contentOfTab",
+                    value: function contentOfTab(n) {
+                        var name = this.tab(n).prop('id').match('(nav-.*)-tab')[1];
+                        return $('#' + name);
+                    }
+                    /**
+                     * Make the nth tab of this TabList flicker or not.
+                     * @param n the position of the tab
+                     * @param b true if the tab must flicker, false elsewhen
+                     */
+
+                }, {
+                    key: "notify",
+                    value: function notify(n) {
+                        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+                        if (b) {
+                            this.tab(n).addClass('notifying');
+                        } else {
+                            this.tab(n).removeClass('notifying');
+                        }
+                    }
+                    /**
+                     * Makes all the tabs flicker or not.
+                     * @param b true if the tabs must flicker, false elsewhen
+                     */
+
+                }, {
+                    key: "notifyAll",
+                    value: function notifyAll() {
+                        var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+                        if (b) {
+                            this.root.find('ul li a').addClass('notifying');
+                        } else {
+                            this.root.find('ul li a').removeClass('notifying');
+                        }
+                    }
+                }]);
+
+                return TabList;
+            }();
+
+        exports.TabList = TabList;
 
         /***/
     }),

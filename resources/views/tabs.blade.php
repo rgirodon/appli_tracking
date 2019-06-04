@@ -1,19 +1,22 @@
 @extends('base')
 
 @section('content')
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Accueil</a>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Lorem ipsum accueil</div>
-    </div>
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <div id="tablist"></div>
     <script>
-        addTab('tab2');
-        addTab('tab3');
-        contentTab(2).text('J\'ai été ajouté avec JS');
-        contentTab(3).append('<button class="btn btn-primary m-5">J\'ai été ajouté avec JS</button>');
+        const tablist = new TabList('#tablist');
+        tablist.addTab({title: 'Accueil', active: true});
+        tablist.addTab({title: 'closeable', closeable: true});
+        tablist.addTab({title: 'notifying'});
+        tablist.addTab();
+        tablist.addTab({title: 'Onglet inséré au milieu', position: 2});
+        tablist.addTab({title: 'Onglet inséré au début', position: 'begin'});
+        tablist.addTab({title: 'Onglet inséré avec un gros chiffre', position: 666});
+        tablist.contentOfTab(2).text('Lorem ipsum accueillant');
+        tablist.contentOfTab(3).text('J\'ai été ajouté avec JS');
+        tablist.contentOfTab(4).append('<button class="btn btn-primary m-5">J\'ai été ajouté avec JS</button>');
+        tablist.notify(5);
     </script>
 @endsection
