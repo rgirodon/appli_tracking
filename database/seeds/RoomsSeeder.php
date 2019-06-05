@@ -19,5 +19,10 @@ class RoomsSeeder extends Seeder
                 'name' => $faker->catchPhrase,
             ]);
         }
+
+        DB::table('rooms_teams')->insert([
+            'team_id' => 1,
+            'room_id' => 1
+        ]);
     }
 }
