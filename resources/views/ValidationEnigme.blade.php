@@ -9,16 +9,16 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Validation:</h4>
+                        <h4 class="modal-title">Validation:</h4> <!-- todo : mettre le nom de l'enigme -->
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
                     </div>
                     <div class="modal-body row">
-                        <form class="col" action="{{ url('/validationEnigme/validationMdp')}}">
+                        <form class="col" action="{{ url('/validationEnigme/validationMdp/1')}}"> <!--todo : mettre une variable pour l'id de l'enigme-->
                             <div class="form-group">
                                 <label for="nom" class="form-control-label">Code</label>
-                                <input type="text" class="form-control" name ="nom" id="nom" placeholder="Entrez le code">
+                                <input type="text" class="form-control" name ="code" id="nom" placeholder="Entrez le code">
                             </div>
                             <button type="submit" class="btn btn-primary pull-right">Valider</button>
                         </form>

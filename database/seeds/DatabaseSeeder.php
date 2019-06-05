@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call([
             TeamsTableSeeder::class,
+            RiddleSeeder::class,
         ]);
         /*Eloquent::unguard();
         $this->call(UsersTablesSeeder::class);*/

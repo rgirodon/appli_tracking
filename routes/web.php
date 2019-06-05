@@ -23,4 +23,4 @@ Route::get('gm', 'GameMasterController@successlogin');
 Route::get('gm/logout', 'GameMasterController@logout');
 
 Route::get('/validationEnigme', 'ValidationEnigmeController@Index');
-Route::get('/validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
+Route::get('/validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');
