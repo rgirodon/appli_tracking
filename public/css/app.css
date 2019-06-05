@@ -10671,7 +10671,7 @@ a.text-dark:focus {
 }
 
 .message .content {
-  background-color: #cccccc;
+  background-color: #dddddd;
   border-radius: 15px;
   padding: 5px 15px;
   max-width: calc(40% + 100px);
