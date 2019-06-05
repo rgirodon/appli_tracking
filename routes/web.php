@@ -22,3 +22,15 @@ Route::get('/onglets', function () {
 Route::get('/team', function () {
     return view('gm_team', ['title' => 'Équipe']);
 });
+
+Route::post('msg/send/{room}', 'MessengerController@sendMessage');
+Route::get('msg/{room}', 'MessengerController@getMessages');
+
+Auth::routes();
+
+Route::get('/gm/login', 'GameMasterController@index');
+Route::post('/gm/checklogin', 'GameMasterController@checklogin');
+Route::get('gm', 'GameMasterController@successlogin');
+Route::get('gm/logout', 'GameMasterController@logout');
+
+Route::get('/home', 'HomeController@index')->name('home');
