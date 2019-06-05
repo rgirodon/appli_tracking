@@ -12,5 +12,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call([
+            TeamsTableSeeder::class,
+            RiddlesSeeder::class,
+            MessagesSeeder::class,
+            RoomsSeeder::class
+        ]);
+        /*Eloquent::unguard();
+        $this->call(UsersTablesSeeder::class);*/
+
     }
 }
