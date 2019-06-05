@@ -61,8 +61,8 @@
         </div>
 
         {{ csrf_field() }}
-        <div class="form-group">
-            <input type="submit" name="login" class="btn btn-primary" value="Login"/>
+        <div class="container text-center">
+            <input type="submit" name="login" class="btn btn-primary" value="connectez-vous"/>
         </div>
     </form>
 @endsection
