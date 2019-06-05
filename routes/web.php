@@ -24,6 +24,9 @@ Route::get('/team', function () {
     return view('gm_team', ['title' => 'Équipe']);
 });
 
+Route::get('/', 'SelectionTeamsController@index');
+Route::post('/', 'SelectionTeamsController@postForm');
+
 Route::post('msg/send/{room}', 'MessengerController@sendMessage');
 Route::get('msg/{room}', 'MessengerController@getMessages');
 
@@ -32,6 +35,11 @@ Auth::routes();
 // GameMaster Login :
 Route::get('gm/login', 'GameMasterController@index');
 Route::post('gm/checklogin', 'GameMasterController@checklogin');
+Route::get('/onglets', function () {
+    return view('tabs', ['title' => 'Onglets']);
+});
+Route::get('/gm/login', 'GameMasterController@index');
+Route::post('/gm/checklogin', 'GameMasterController@checklogin');
 Route::get('gm', 'GameMasterController@successlogin');
 Route::get('gm/logout', 'GameMasterController@logout');
 
@@ -39,3 +47,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/validationEnigme', 'ValidationEnigmeController@Index');
 Route::get('/validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
+Route::get('/validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');
