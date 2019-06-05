@@ -40,7 +40,7 @@ class SelectionTeamsController extends Controller
     function successlogin()
     {
         if (Auth::check())
-            return view('auth.successloginTeams');
+            return view('auth.successLoginTeams');
         else if (Auth::check())
             return redirect('/');
         else
