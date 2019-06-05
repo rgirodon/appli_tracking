@@ -36,3 +36,6 @@ Route::get('gm', 'GameMasterController@successlogin');
 Route::get('gm/logout', 'GameMasterController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/validationEnigme', 'ValidationEnigmeController@Index');
+Route::get('/validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
