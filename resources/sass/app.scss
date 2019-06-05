@@ -6,5 +6,15 @@
 @import '~bootstrap/scss/bootstrap';
 // jQuery-ui
 @import '~jquery-ui/themes/base/all.css';
+// Open iconic
+@import '~open-iconic/font/css/open-iconic-bootstrap.min.css';
+
 //Custom
 @import "tabs";
+@import "header";
+@import "gm_team";
+
+// Global CSS
+body{
+  font-size: 1rem;
+}

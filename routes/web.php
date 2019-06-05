@@ -19,6 +19,6 @@ Route::get('/onglets', function () {
     return view('tabs', ['title' => 'Onglets']);
 });
 
-Route::get('/riddles', function () {
-    return view('riddlesDisplay', ['title' => 'Énigmes']);
+Route::get('/team', function () {
+    return view('gm_team', ['title' => 'Équipe']);
 });
