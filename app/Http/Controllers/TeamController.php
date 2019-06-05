@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-class SelectionTeamsController extends Controller
+class TeamController extends Controller
 {
-    public function index()
+    public function login()
     {
         return view('auth.loginTeams');
     }
@@ -20,7 +20,6 @@ class SelectionTeamsController extends Controller
             'color' => 'required',
             'num' => 'required'
         ]);
-
 
         $name = $request->input('color') . $request->input('num');
 
@@ -37,12 +36,10 @@ class SelectionTeamsController extends Controller
         return redirect('/');
     }
 
-    function successlogin()
+    function home()
     {
         if (Auth::check())
             return view('auth.successLoginTeams');
-        else if (Auth::check())
-            return redirect('/');
         else
             return redirect('player/login');
     }

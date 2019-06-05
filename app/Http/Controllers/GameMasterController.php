@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class GameMasterController extends Controller
 {
-    function index()
+    function login()
     {
         return view('auth.login');
     }
@@ -32,7 +32,7 @@ class GameMasterController extends Controller
 
     }
 
-    function successlogin()
+    function home()
     {
         if (Auth::check() and Auth::user()->isGM)
             return view('auth.successlogin');
