@@ -47,6 +47,23 @@ $(document).on("mousedown", function (e1) {
     });
 });
 
+// jQuery template clone plugin
+(function ($) {
+    const default_clone = $.fn.clone;
+
+    $.fn.clone = function () {
+        if (this.is('template')) {
+            return $(this[0].content).clone();
+        } else {
+            return default_clone.call(this);
+        }
+    };
+
+    $.fn.exists = function () {
+        return this.length > 0;
+    }
+}(jQuery));
+
 // Custom
 TabList = require('./tabs').TabList;
-
+GMTeam = require('./gm_team').GMTeam;

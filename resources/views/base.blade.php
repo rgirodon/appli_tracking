@@ -11,6 +11,9 @@
     {{--{{Html::script('ts/app.js')}}--}}
 </head>
 <body>
+<header class="text-center mb-5">
+    <h1 class="my-auto">TSE Escape Tracking</h1>
+</header>
 @yield('content')
 </body>
 </html>

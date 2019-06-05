@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/onglets', function () {
     return view('tabs', ['title' => 'Onglets']);
 });
+
+Route::get('/team', function () {
+    return view('gm_team', ['title' => 'Équipe']);
+});
