@@ -39616,18 +39616,29 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window
  */
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+//
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+//
+// /**
+//  * Next, we will create a fresh Vue application instance and attach it to
+//  * the page. Then, you may begin adding components to this application
+//  * or customize the JavaScript scaffolding to fit your unique needs.
+//  */
+//
 // const app = new Vue({
 //     el: '#app',
 // });
-// jQuery-ui
 
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$(document).ready(function () {
+  var MessageAPI = __webpack_require__(/*! ./messenger/MessageAPI */ "./resources/js/messenger/MessageAPI.js").MessageAPI;
+
+  window.msg = new MessageAPI(1, '.collection', "#message-template", "#message-form"); // const app = new Vue({
+  //     el: '#app',
+  // });
+}); // jQuery-ui
 
 __webpack_require__(/*! jquery-ui/ui/widgets/sortable */ "./node_modules/jquery-ui/ui/widgets/sortable.js");
 
@@ -39843,6 +39854,234 @@ function () {
 }();
 
 exports.GMTeam = GMTeam;
+
+/***/ }),
+
+/***/ "./resources/js/messenger/MessageAPI.js":
+/*!**********************************************!*\
+  !*** ./resources/js/messenger/MessageAPI.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var MessageTemplate = __webpack_require__(/*! ./MessageTemplate */ "./resources/js/messenger/MessageTemplate.js").MessageTemplate;
+
+var MessageForm = __webpack_require__(/*! ./MessageForm */ "./resources/js/messenger/MessageForm.js").MessageForm;
+
+var MessageAPI =
+/*#__PURE__*/
+function () {
+  function MessageAPI(room, container, template, form) {
+    var _this = this;
+
+    _classCallCheck(this, MessageAPI);
+
+    this.container = typeof container === 'string' ? document.querySelector(container) : container;
+    this.room = room;
+    this.template = new MessageTemplate(template);
+    this.form = new MessageForm(form);
+    this.refreshTimeout = null;
+    this.refreshDelay = 10000; // 10 seconds
+
+    this.form.handler = function (data) {
+      return _this.refreshMessages();
+    };
+
+    this.refreshMessages();
+  }
+
+  _createClass(MessageAPI, [{
+    key: "refreshMessages",
+    value: function refreshMessages() {
+      var _this2 = this;
+
+      clearTimeout(this.refreshTimeout);
+      $.ajax('msg/' + this.room, {
+        method: 'get',
+        dataType: 'json',
+        error: function error(jqXHR, textStatus, errorThrown) {
+          console.error(textStatus || errorThrown);
+          console.error(jqXHR);
+        },
+        success: function success(data, textStatus, jqXHR) {
+          _this2.container.innerHTML = '';
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = data.messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var message = _step.value;
+
+              var element = _this2.template.createMessage(message);
+
+              _this2.container.appendChild(element);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                _iterator["return"]();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+        }
+      });
+      this.refreshTimeout = setTimeout(function () {
+        return _this2.refreshMessages();
+      }, this.refreshDelay);
+    }
+  }]);
+
+  return MessageAPI;
+}();
+
+exports.MessageAPI = MessageAPI;
+
+/***/ }),
+
+/***/ "./resources/js/messenger/MessageForm.js":
+/*!***********************************************!*\
+  !*** ./resources/js/messenger/MessageForm.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+var MessageForm =
+/*#__PURE__*/
+function () {
+  function MessageForm(param) {
+    _classCallCheck(this, MessageForm);
+
+    if (param instanceof MessageForm) return param;
+    if (typeof param === 'string') param = document.querySelector(param);
+
+    if (param instanceof HTMLElement) {
+      param = {
+        element: param
+      };
+    }
+
+    this.form = param.element;
+    this.setup();
+  }
+
+  _createClass(MessageForm, [{
+    key: "setup",
+    value: function setup() {
+      var _this = this;
+
+      console.log(this.form);
+      this.form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        $.ajax(_this.form.action, {
+          method: _this.form.method || 'post',
+          dataType: 'json',
+          data: $(_this.form).serialize(),
+          error: function error(jqXHR, textStatus, errorThrown) {
+            console.error(textStatus || errorThrown);
+            console.error(jqXHR);
+          },
+          success: function success(data, textStatus, jqXHR) {
+            if (_this.handler) _this.handler(data);
+          }
+        });
+      });
+    }
+  }]);
+
+  return MessageForm;
+}();
+
+exports.MessageForm = MessageForm;
+
+/***/ }),
+
+/***/ "./resources/js/messenger/MessageTemplate.js":
+/*!***************************************************!*\
+  !*** ./resources/js/messenger/MessageTemplate.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var MessageTemplate =
+/*#__PURE__*/
+function () {
+  function MessageTemplate(param) {
+    _classCallCheck(this, MessageTemplate);
+
+    if (param instanceof MessageTemplate) return param;
+    if (typeof param === 'string') param = document.querySelector(param);
+
+    if (param instanceof HTMLElement) {
+      param = {
+        element: param
+      };
+    }
+
+    this.template = param.element;
+    this.nameSelector = param.nameSelector || '.name';
+    this.dateSelector = param.dateSelector || '.date';
+    this.contentSelector = param.contentSelector || '.content';
+  }
+
+  _createClass(MessageTemplate, [{
+    key: "createMessage",
+    value: function createMessage(message) {
+      var date = new Date(message.date);
+      var element = document.importNode(this.template.content, true);
+      element.querySelector(this.nameSelector).textContent = message.author;
+      element.querySelector(this.dateSelector).textContent = MessageTemplate.renderTime(date);
+      element.querySelector(this.contentSelector).textContent = message.content;
+      if (message.self) element.querySelector('.message').classList.add('self');
+      return element;
+    }
+  }], [{
+    key: "renderTime",
+    value: function renderTime(date) {
+      var min = date.getHours() * 60 + date.getMinutes();
+      var hour = Math.floor(min / 60);
+      min %= 60;
+      return this.renderWithZero(hour) + ':' + this.renderWithZero(min);
+    }
+  }, {
+    key: "renderWithZero",
+    value: function renderWithZero(number) {
+      if (number < 10) return '0' + number;
+      return '' + number;
+    }
+  }]);
+
+  return MessageTemplate;
+}();
+
+exports.MessageTemplate = MessageTemplate;
 
 /***/ }),
 

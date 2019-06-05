@@ -12181,6 +12181,36 @@ a.text-dark:focus {
   }
 }
 
+.message .msg-head {
+  font-size: 10px;
+}
+
+.message .name {
+  font-size: 12px;
+}
+
+.message .content {
+  background-color: #dddddd;
+  border-radius: 15px;
+  padding: 5px 15px;
+  max-width: calc(40% + 100px);
+  display: inline-block;
+  text-align: left;
+}
+
+.message > div {
+  text-align: left;
+}
+
+.message.self .content {
+  background-color: #3490dc;
+  color: white;
+}
+
+.message.self > div {
+  text-align: right;
+}
+
 @-webkit-keyframes flicker {
   from {
     background-color: #f8fafc;
