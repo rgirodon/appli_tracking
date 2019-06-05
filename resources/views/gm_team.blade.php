@@ -38,7 +38,5 @@
         gmTeam1.setTeamName('super équipe JS');
         gmTeam1.setRiddleName('super énigme JS lorem ipsum dolor sit amet consectetur adipiscing elit')
     </script>
-    <script>
 
-    </script>
 @endsection
