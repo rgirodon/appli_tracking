@@ -34,7 +34,12 @@ class GameMasterController extends Controller
 
     function successlogin()
     {
-        return view('auth.successlogin');
+        if (Auth::check() and Auth::user()->isGM)
+            return view('auth.successlogin');
+        else if (Auth::check())
+            return redirect('/');
+        else
+            return redirect('gm/login');
     }
 
     function logout()

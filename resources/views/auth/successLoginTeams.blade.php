@@ -15,11 +15,10 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ url('/gm/logout') }}">
+                <a class="dropdown-item" href="{{ url('/player/logout') }}">
                     {{ __('Logout') }}
                 </a>
             </div>
         </li>
     @endif
 @endsection
-
