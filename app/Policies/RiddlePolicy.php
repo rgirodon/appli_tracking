@@ -13,7 +13,7 @@ class RiddlePolicy
 
     public function validateRiddle(Team $team, Riddle $riddle){
         return !is_null($team) &&
-        !is_null($riddle->teams->where('team_id', Auth::user()->id)->pivot->start_date);
+        !is_null($riddle->teams->where('id', Auth::user()->id)->first()->pivot->start_date);
     }
 
 }

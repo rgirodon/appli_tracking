@@ -23,6 +23,6 @@ class Riddle extends Model
 
     public function teams()
     {
-        return $this->belongsToMany('App\Team', 'riddles_teams');
+        return $this->belongsToMany('App\Team', 'riddles_teams')->withPivot('start_date', 'end_date');
     }
 }

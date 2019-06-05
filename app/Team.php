@@ -56,6 +56,6 @@ class Team extends Authenticatable
 
     public function riddles()
     {
-        return $this->belongsToMany('App\Riddle', 'riddles_teams');
+        return $this->belongsToMany('App\Riddle', 'riddles_teams')->withPivot('start_date', 'end_date');
     }
 }

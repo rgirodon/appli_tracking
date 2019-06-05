@@ -17,7 +17,7 @@ class ValidationMdpController extends Controller
 
         if ($riddledb->code == $request->input('code'))
         {
-            $riddledb->teams->where('team_id', Auth::user()->id)->pivot->end_date = now();
+            $riddledb->teams->where('id', Auth::user()->id)->first()->pivot->end_date = now();
 
         }
 
