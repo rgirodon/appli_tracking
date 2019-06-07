@@ -49,6 +49,11 @@ require('./bootstrap');
     }
 }(jQuery));
 
+// EasyTimer
+var { Timer } = require('easytimer.js/dist/easytimer.min');
+
 // Custom
 TabList = require('./tabs').TabList;
 GMTeam = require('./gm_team').GMTeam;
+PlayerRiddle = require('./player_riddle').PlayerRiddle;
+PlayerRiddleGrid = require('./player_riddle').PlayerRiddleGrid;

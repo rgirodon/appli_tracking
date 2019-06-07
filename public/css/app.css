@@ -12285,6 +12285,15 @@ header h1 {
           transform: translateY(-50%) rotate(0.5turn);
 }
 
+.player-riddle-row {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.player-riddle-card {
+  width: 20rem;
+}
+
 body {
   font-size: 1rem;
 }

@@ -15,10 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/onglets', function () {
+// test onglets
+Route::get('/demo/onglets', function () {
     return view('tabs', ['title' => 'Onglets']);
 });
 
-Route::get('/team', function () {
+// test gm_team
+Route::get('/demo/team', function () {
     return view('gm_team', ['title' => 'Équipe']);
+});
+
+// test player_riddle
+Route::get('/demo/player_riddle', function () {
+    return view('player_riddle', ['title' => 'Joueur énigme']);
 });
