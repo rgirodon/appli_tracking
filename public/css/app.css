@@ -12258,6 +12258,19 @@ header h1 {
   }
 }
 
+header h1 a {
+  text-decoration: none;
+  color: inherit !important;
+}
+
+header h1 a:link,
+header h1 a :visited,
+header h1 a :hover,
+header h1 a :active {
+  text-decoration: none;
+  color: inherit !important;
+}
+
 .gm-team {
   padding-top: 32px;
   padding-bottom: 32px;

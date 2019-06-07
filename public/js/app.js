@@ -40156,9 +40156,9 @@ var _require = __webpack_require__(/*! easytimer.js/dist/easytimer.min */ "./nod
 
 
 TabList = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").TabList;
-GMTeam = __webpack_require__(/*! ./gm_team */ "./resources/js/gm_team.js").GMTeam;
-PlayerRiddle = __webpack_require__(/*! ./player_riddle */ "./resources/js/player_riddle.js").PlayerRiddle;
-PlayerRiddleGrid = __webpack_require__(/*! ./player_riddle */ "./resources/js/player_riddle.js").PlayerRiddleGrid;
+GMTeam = __webpack_require__(/*! ./gm/gm_team */ "./resources/js/gm/gm_team.js").GMTeam;
+PlayerRiddle = __webpack_require__(/*! ./player/player_riddle */ "./resources/js/player/player_riddle.js").PlayerRiddle;
+PlayerRiddleGrid = __webpack_require__(/*! ./player/player_riddle */ "./resources/js/player/player_riddle.js").PlayerRiddleGrid;
 
 /***/ }),
 
@@ -40220,10 +40220,10 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/gm_team.js":
-/*!*********************************!*\
-  !*** ./resources/js/gm_team.js ***!
-  \*********************************/
+/***/ "./resources/js/gm/gm_team.js":
+/*!************************************!*\
+  !*** ./resources/js/gm/gm_team.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -40569,10 +40569,10 @@ exports.MessageTemplate = MessageTemplate;
 
 /***/ }),
 
-/***/ "./resources/js/player_riddle.js":
-/*!***************************************!*\
-  !*** ./resources/js/player_riddle.js ***!
-  \***************************************/
+/***/ "./resources/js/player/player_riddle.js":
+/*!**********************************************!*\
+  !*** ./resources/js/player/player_riddle.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -40584,11 +40584,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var PlayerRiddleFactory = function () {
   return {
-    construct: function construct(root) {
+    construct: function construct(root, id) {
       // fills the node
       var template = $('#player-riddle-template');
       if (!template.exists()) throw Error('player-riddle-template does not exist');
       template.clone().appendTo(root);
+      var playerRiddleRoot = root.find('.player-riddle-card').last();
+      playerRiddleRoot.attr('id', id);
+      return playerRiddleRoot;
     }
   };
 }();
@@ -40596,32 +40599,47 @@ var PlayerRiddleFactory = function () {
 var PlayerRiddle =
 /*#__PURE__*/
 function () {
-  function PlayerRiddle(root) {
+  function PlayerRiddle(root, id) {
+    var _this = this;
+
     _classCallCheck(this, PlayerRiddle);
 
     // assures that root node is quite correct
     if (!(root instanceof jQuery)) {
       if (typeof root !== 'string') throw 'Invalid parameter in constructor of TabList.';
       root = $(root);
-    }
-
-    this.root = root; // defines a unique id
-
-    var id = this.root.attr('id');
-
-    if ($(this.accordion_prefix + id).exists()) {
-      var disamb = 1;
-      id = id + '-' + disamb;
-
-      while ($(this.accordion_prefix + id).exists()) {
-        id = id + '-' + ++disamb;
-      }
     } // saves id
 
 
     this.id = id; // constructs
 
-    PlayerRiddleFactory.construct(root);
+    this.root = PlayerRiddleFactory.construct(root, id); // start button
+
+    this.root.find('.start-button').click(function () {
+      _this.showButtons({
+        start: false,
+        validate: true,
+        cancel: true
+      }); // todo start chrono, ajax
+
+    }); //  validate button modifies the modal when clicking
+
+    this.root.find('.validate-button').click(function () {
+      var modal = $('#validation-modal');
+      modal.find('.modal-title').text('Validez ' + root.find('.card-title').text() + "\xA0:");
+      var form = modal.find('form');
+      var url_base = form.attr('action').match(/(.*\/)/g)[0];
+      form.attr('action', url_base + _this.id); // todo mettre le bon id dans l'action du form
+    }); // cancel button
+
+    this.root.find('.cancel-button').click(function () {
+      _this.showButtons({
+        start: true,
+        validate: false,
+        cancel: false
+      }); // todo reset timer, ajax
+
+    });
   }
 
   _createClass(PlayerRiddle, [{
@@ -40662,10 +40680,10 @@ function () {
   }, {
     key: "showButtons",
     value: function showButtons(options) {
-      var _this = this;
+      var _this2 = this;
 
       Object.keys(options).forEach(function (key) {
-        options[key] ? _this.root.find('.' + key + '-button').show() : _this.root.find('.' + key + '-button').hide();
+        options[key] ? _this2.root.find('.' + key + '-button').show() : _this2.root.find('.' + key + '-button').hide();
       });
     }
   }, {
@@ -40714,10 +40732,10 @@ function () {
     }
   }, {
     key: "addPlayerRiddle",
-    value: function addPlayerRiddle(rowNumber) {
+    value: function addPlayerRiddle(rowNumber, id) {
       var row = this.root.find('.player-riddle-row:nth-child(' + rowNumber + ') .row').first();
       var playerRiddleNumber = row.children().length + 1;
-      return new PlayerRiddle(row);
+      return new PlayerRiddle(row, id);
     }
   }]);
 

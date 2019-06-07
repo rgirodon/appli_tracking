@@ -1,6 +1,7 @@
-@extends('base')
+@extends('layouts.base')
 
 @section('content')
+    {{--template pour une énigme gm--}}
     <template id="gm-team-template">
         <div class="container jumbotron gm-team">
             <div class="row align-items-start gm-teams mb-3">

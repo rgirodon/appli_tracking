@@ -1,40 +1,61 @@
 const PlayerRiddleFactory = (function () {
     return {
-        construct: function (root) {
+        construct: function (root, id) {
             // fills the node
             const template = $('#player-riddle-template');
             if (!template.exists())
                 throw Error('player-riddle-template does not exist');
             template.clone().appendTo(root);
+            const playerRiddleRoot = root.find('.player-riddle-card').last();
+            playerRiddleRoot.attr('id', id);
+            return playerRiddleRoot;
         }
     };
 })();
 
 class PlayerRiddle {
-    constructor(root) {
+    constructor(root, id) {
         // assures that root node is quite correct
         if (!(root instanceof jQuery)) {
             if (typeof root !== 'string')
                 throw 'Invalid parameter in constructor of TabList.';
             root = $(root);
         }
-        this.root = root;
-
-        // defines a unique id
-        let id = this.root.attr('id');
-        if ($(this.accordion_prefix + id).exists()) {
-            let disamb = 1;
-            id = id + '-' + disamb;
-            while ($(this.accordion_prefix + id).exists()) {
-                id = id + '-' + ++disamb;
-            }
-        }
 
         // saves id
         this.id = id;
 
         // constructs
-        PlayerRiddleFactory.construct(root);
+        this.root = PlayerRiddleFactory.construct(root, id);
+
+        // start button
+        this.root.find('.start-button').click(() => {
+            this.showButtons({
+                start: false,
+                validate: true,
+                cancel: true
+            });
+            // todo start chrono, ajax
+        });
+
+        //  validate button modifies the modal when clicking
+        this.root.find('.validate-button').click(() => {
+            const modal = $('#validation-modal');
+            modal.find('.modal-title').text('Validez ' + root.find('.card-title').text() + '\u00A0:');
+            const form = modal.find('form');
+            const url_base = form.attr('action').match(/(.*\/)/g)[0];
+            form.attr('action', url_base + this.id); // todo mettre le bon id dans l'action du form
+        });
+
+        // cancel button
+        this.root.find('.cancel-button').click(() => {
+            this.showButtons({
+                start: true,
+                validate: false,
+                cancel: false
+            });
+            // todo reset timer, ajax
+        })
     }
 
     setAttributes(options) {
@@ -104,10 +125,10 @@ class PlayerRiddleGrid {
         this.root.append(container);
     }
 
-    addPlayerRiddle(rowNumber) {
+    addPlayerRiddle(rowNumber, id) {
         const row = this.root.find('.player-riddle-row:nth-child(' + rowNumber + ') .row').first();
         const playerRiddleNumber = row.children().length + 1;
-        return new PlayerRiddle(row);
+        return new PlayerRiddle(row, id);
     }
 }
 

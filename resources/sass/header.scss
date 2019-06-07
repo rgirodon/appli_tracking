@@ -1,15 +1,24 @@
-header{
+header {
   background-color: $teal;
   color: mintcream;
   padding: 1rem;
   @include media-breakpoint-up(sm) {
     padding: 2rem;
   }
-}
 
-header h1{
-  font-size: 1.5rem;
-  @include media-breakpoint-up(sm) {
-    font-size: 3rem;
+  & h1 {
+    font-size: 1.5rem;
+    @include media-breakpoint-up(sm) {
+      font-size: 3rem;
+    }
+
+    & a {
+      text-decoration: none;
+      color: inherit !important;
+      &:link, :visited, :hover, :active {
+        text-decoration: none;
+        color: inherit !important;
+      }
+    }
   }
 }

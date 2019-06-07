@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('logout')
     @if(isset(Auth::user()->name))

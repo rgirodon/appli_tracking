@@ -82,6 +82,6 @@ var { Timer } = require('easytimer.js/dist/easytimer.min');
 
 // Custom
 TabList = require('./tabs').TabList;
-GMTeam = require('./gm_team').GMTeam;
-PlayerRiddle = require('./player_riddle').PlayerRiddle;
-PlayerRiddleGrid = require('./player_riddle').PlayerRiddleGrid;
+GMTeam = require('./gm/gm_team').GMTeam;
+PlayerRiddle = require('./player/player_riddle').PlayerRiddle;
+PlayerRiddleGrid = require('./player/player_riddle').PlayerRiddleGrid;
