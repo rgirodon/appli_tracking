@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 //Player Login :
 Route::get('/', 'TeamController@home');
 Route::get('player/login', 'TeamController@login');
@@ -32,13 +33,16 @@ Route::get('validationEnigme/validationMdp', 'ValidationMdpController@checkMdp')
 Route::get('validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');
 
 
-
 // Temporaire (Démo)
-Route::get('onglets', function () {
+Route::get('/demo/onglets', function () {
     return view('tabs', ['title' => 'Onglets']);
 });
 
-Route::get('team', function () {
+Route::get('/demo/team', function () {
     return view('gm_team', ['title' => 'Équipe']);
 });
 
+// test player_riddle
+Route::get('/demo/player_riddle', function () {
+    return view('player_riddle', ['title' => 'Joueur énigme']);
+});

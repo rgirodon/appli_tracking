@@ -6296,6 +6296,484 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/easytimer.js/dist/easytimer.min.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/easytimer.js/dist/easytimer.min.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * easytimer.js
+ * Generated: 2019-03-18
+ * Version: 3.1.0
+ */
+
+!function(t,n){ true?n(exports):undefined}(this,function(t){"use strict";function q(t){return(q="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,n,e){var o,r="";if(t.length>n)return t;for(o=0;o<n;o+=1)r+=String(e);return(r+t).slice(-r.length)}function I(){this.secondTenths=0,this.seconds=0,this.minutes=0,this.hours=0,this.days=0,this.toString=function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:["hours","minutes","seconds"],n=1<arguments.length&&void 0!==arguments[1]?arguments[1]:":",e=2<arguments.length&&void 0!==arguments[2]?arguments[2]:2;t=t||["hours","minutes","seconds"],n=n||":",e=e||2;var o,r=[];for(o=0;o<t.length;o+=1)void 0!==this[t[o]]&&("secondTenths"===t[o]?r.push(this[t[o]]):r.push(i(this[t[o]],e,"0")));return r.join(n)}}var n="undefined"!=typeof window?window.CustomEvent:void 0;"undefined"!=typeof window&&"function"!=typeof n&&((n=function(t,n){n=n||{bubbles:!1,cancelable:!1,detail:void 0};var e=document.createEvent("CustomEvent");return e.initCustomEvent(t,n.bubbles,n.cancelable,n.detail),e}).prototype=window.Event.prototype,window.CustomEvent=n);var _="secondTenths",z="seconds",R="minutes",B="hours",F="days",G=[_,z,R,B,F],H={secondTenths:100,seconds:1e3,minutes:6e4,hours:36e5,days:864e5},J={secondTenths:10,seconds:60,minutes:60,hours:24},K= true&&module.exports&&"function"=="function"?__webpack_require__(/*! events */ "./node_modules/events/events.js"):void 0;function N(){return"undefined"!=typeof document}function Q(){return K}function W(t,n){return(t%n+n)%n}function e(){var n,e,o,r,i,s,u,c,a,d,f=new I,h=new I,l=N()?document.createElement("span"):Q()?new K.EventEmitter:void 0,v=!1,p=!1,m={},y={detail:{timer:this}};function w(t,n){var e,o,r=h[n];return o=V(t,H[e=n]),h[e]=o,f[e]=e===F?o:0<=o?W(o,J[e]):J[e]-W(o,J[e]),h[n]!==r}function t(){b(),function(){for(var t in f)f.hasOwnProperty(t)&&"number"==typeof f[t]&&(f[t]=0);for(var n in h)h.hasOwnProperty(n)&&"number"==typeof h[n]&&(h[n]=0)}()}function b(){clearInterval(n),n=void 0,p=v=!1}function g(t){k()?(a=E(),s=L(i.target)):function(t){e=function(t){if(n=t="string"==typeof t?t:z,0<=G.indexOf(n))return t;var n;throw new Error("Error in precision parameter: ".concat(t," is not a valid value"))}((t=t||{}).precision),r="function"==typeof t.callback?t.callback:function(){},c=!0===t.countdown,o=!0===c?-1:1,"object"===q(t.startValues)?(n=t.startValues,u=C(n),f.secondTenths=u[0],f.seconds=u[1],f.minutes=u[2],f.hours=u[3],f.days=u[4],h=O(u,h)):u=null;var n;a=E(),j(),s="object"===q(t.target)?L(t.target):c?(t.target={seconds:0},L(t.target)):null;m={precision:e,callback:r,countdown:"object"===q(t)&&!0===t.countdown,target:s,startValues:u},i=t}(t),function(){var t=H[e];if(x(S(Date.now())))return;n=setInterval(T,t),v=!0,p=!1}()}function E(){return S(Date.now())-h.secondTenths*H[_]*o}function T(){var t=S(Date.now());!function(t){t[_]&&M("secondTenthsUpdated",y);t[z]&&M("secondsUpdated",y);t[R]&&M("minutesUpdated",y);t[B]&&M("hoursUpdated",y);t[F]&&M("daysUpdated",y)}(j()),r(y.detail.timer),x(t)&&(U(),M("targetAchieved",y))}function j(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:S(Date.now()),n=0<o?t-a:a-t,e={};return e[_]=w(n,_),e[z]=w(n,z),e[R]=w(n,R),e[B]=w(n,B),e[F]=w(n,F),e}function S(t){return Math.floor(t/H[e])*H[e]}function x(t){return s instanceof Array&&d<=t}function C(t){var n,e,o,r,i,s;if("object"===q(t))if(t instanceof Array){if(5!==t.length)throw new Error("Array size not valid");s=t}else{for(var u in t)if(G.indexOf(u)<0)throw new Error("Error in startValues or target parameter: ".concat(u," is not a valid input value"));s=[t.secondTenths||0,t.seconds||0,t.minutes||0,t.hours||0,t.days||0]}return n=s[0],e=s[1]+V(n,10),o=s[2]+V(e,60),r=s[3]+V(o,60),i=s[4]+V(r,24),s[0]=n%10,s[1]=e%60,s[2]=o%60,s[3]=r%24,s[4]=i,s}function V(t,n){var e=t/n;return e<0?Math.ceil(e):Math.floor(e)}function L(t){if(t){var n=O(s=C(t));return d=a+n.secondTenths*H[_]*o,s}}function O(t,n){var e=n||{};return e.days=t[4],e.hours=24*e.days+t[3],e.minutes=60*e.hours+t[2],e.seconds=60*e.minutes+t[1],e.secondTenths=10*e.seconds+t[[0]],e}function U(){t(),M("stopped",y)}function A(t,n){N()?l.addEventListener(t,n):Q()&&l.on(t,n)}function D(t,n){N()?l.removeEventListener(t,n):Q()&&l.removeListener(t,n)}function M(t,n){N()?l.dispatchEvent(new CustomEvent(t,n)):Q()&&l.emit(t,n)}function P(){return v}function k(){return p}void 0!==this&&(this.start=function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:{};P()||(g(t),M("started",y))},this.pause=function(){b(),p=!0,M("paused",y)},this.stop=U,this.reset=function(){t(),g(i),M("reset",y)},this.isRunning=P,this.isPaused=k,this.getTimeValues=function(){return f},this.getTotalTimeValues=function(){return h},this.getConfig=function(){return m},this.addEventListener=A,this.on=A,this.removeEventListener=D,this.off=D)}t.default=e,t.Timer=e,Object.defineProperty(t,"__esModule",{value:!0})});
+
+
+/***/ }),
+
+/***/ "./node_modules/events/events.js":
+/*!***************************************!*\
+  !*** ./node_modules/events/events.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var R = typeof Reflect === 'object' ? Reflect : null
+var ReflectApply = R && typeof R.apply === 'function'
+  ? R.apply
+  : function ReflectApply(target, receiver, args) {
+    return Function.prototype.apply.call(target, receiver, args);
+  }
+
+var ReflectOwnKeys
+if (R && typeof R.ownKeys === 'function') {
+  ReflectOwnKeys = R.ownKeys
+} else if (Object.getOwnPropertySymbols) {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target)
+      .concat(Object.getOwnPropertySymbols(target));
+  };
+} else {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target);
+  };
+}
+
+function ProcessEmitWarning(warning) {
+  if (console && console.warn) console.warn(warning);
+}
+
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+}
+
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._eventsCount = 0;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+var defaultMaxListeners = 10;
+
+Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
+  enumerable: true,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(arg) {
+    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
+    }
+    defaultMaxListeners = arg;
+  }
+});
+
+EventEmitter.init = function() {
+
+  if (this._events === undefined ||
+      this._events === Object.getPrototypeOf(this)._events) {
+    this._events = Object.create(null);
+    this._eventsCount = 0;
+  }
+
+  this._maxListeners = this._maxListeners || undefined;
+};
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
+  }
+  this._maxListeners = n;
+  return this;
+};
+
+function $getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
+
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return $getMaxListeners(this);
+};
+
+EventEmitter.prototype.emit = function emit(type) {
+  var args = [];
+  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+  var doError = (type === 'error');
+
+  var events = this._events;
+  if (events !== undefined)
+    doError = (doError && events.error === undefined);
+  else if (!doError)
+    return false;
+
+  // If there is no 'error' event listener then throw.
+  if (doError) {
+    var er;
+    if (args.length > 0)
+      er = args[0];
+    if (er instanceof Error) {
+      // Note: The comments on the `throw` lines are intentional, they show
+      // up in Node's output if this results in an unhandled exception.
+      throw er; // Unhandled 'error' event
+    }
+    // At least give some kind of context to the user
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    err.context = er;
+    throw err; // Unhandled 'error' event
+  }
+
+  var handler = events[type];
+
+  if (handler === undefined)
+    return false;
+
+  if (typeof handler === 'function') {
+    ReflectApply(handler, this, args);
+  } else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      ReflectApply(listeners[i], this, args);
+  }
+
+  return true;
+};
+
+function _addListener(target, type, listener, prepend) {
+  var m;
+  var events;
+  var existing;
+
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+
+  events = target._events;
+  if (events === undefined) {
+    events = target._events = Object.create(null);
+    target._eventsCount = 0;
+  } else {
+    // To avoid recursion in the case that type === "newListener"! Before
+    // adding it to the listeners, first emit "newListener".
+    if (events.newListener !== undefined) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
+
+      // Re-assign `events` because a newListener handler could have caused the
+      // this._events to be assigned to a new object
+      events = target._events;
+    }
+    existing = events[type];
+  }
+
+  if (existing === undefined) {
+    // Optimize the case of one listener. Don't need the extra array object.
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      // Adding the second element, need to change to array.
+      existing = events[type] =
+        prepend ? [listener, existing] : [existing, listener];
+      // If we've already got an array, just append.
+    } else if (prepend) {
+      existing.unshift(listener);
+    } else {
+      existing.push(listener);
+    }
+
+    // Check for listener leak
+    m = $getMaxListeners(target);
+    if (m > 0 && existing.length > m && !existing.warned) {
+      existing.warned = true;
+      // No error code for this since it is a Warning
+      // eslint-disable-next-line no-restricted-syntax
+      var w = new Error('Possible EventEmitter memory leak detected. ' +
+                          existing.length + ' ' + String(type) + ' listeners ' +
+                          'added. Use emitter.setMaxListeners() to ' +
+                          'increase limit');
+      w.name = 'MaxListenersExceededWarning';
+      w.emitter = target;
+      w.type = type;
+      w.count = existing.length;
+      ProcessEmitWarning(w);
+    }
+  }
+
+  return target;
+}
+
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
+
+function onceWrapper() {
+  var args = [];
+  for (var i = 0; i < arguments.length; i++) args.push(arguments[i]);
+  if (!this.fired) {
+    this.target.removeListener(this.type, this.wrapFn);
+    this.fired = true;
+    ReflectApply(this.listener, this.target, args);
+  }
+}
+
+function _onceWrap(target, type, listener) {
+  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
+  var wrapped = onceWrapper.bind(state);
+  wrapped.listener = listener;
+  state.wrapFn = wrapped;
+  return wrapped;
+}
+
+EventEmitter.prototype.once = function once(type, listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+  this.on(type, _onceWrap(this, type, listener));
+  return this;
+};
+
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      if (typeof listener !== 'function') {
+        throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+      }
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+
+// Emits a 'removeListener' event if and only if the listener was removed.
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+
+      if (typeof listener !== 'function') {
+        throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+      }
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      list = events[type];
+      if (list === undefined)
+        return this;
+
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+
+        if (position < 0)
+          return this;
+
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+
+        if (list.length === 1)
+          events[type] = list[0];
+
+        if (events.removeListener !== undefined)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+
+      return this;
+    };
+
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events, i;
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      // not listening for removeListener, no need to emit
+      if (events.removeListener === undefined) {
+        if (arguments.length === 0) {
+          this._events = Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== undefined) {
+          if (--this._eventsCount === 0)
+            this._events = Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+
+      // emit removeListener for all listeners on all events
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+
+      listeners = events[type];
+
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners !== undefined) {
+        // LIFO order
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+
+      return this;
+    };
+
+function _listeners(target, type, unwrap) {
+  var events = target._events;
+
+  if (events === undefined)
+    return [];
+
+  var evlistener = events[type];
+  if (evlistener === undefined)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ?
+    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
+};
+
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
+};
+
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+
+  if (events !== undefined) {
+    var evlistener = events[type];
+
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener !== undefined) {
+      return evlistener.length;
+    }
+  }
+
+  return 0;
+}
+
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+
+function arrayClone(arr, n) {
+  var copy = new Array(n);
+  for (var i = 0; i < n; ++i)
+    copy[i] = arr[i];
+  return copy;
+}
+
+function spliceOne(list, index) {
+  for (; index + 1 < list.length; index++)
+    list[index] = list[index + 1];
+  list.pop();
+}
+
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/jquery-ui/ui/data.js":
 /*!*******************************************!*\
   !*** ./node_modules/jquery-ui/ui/data.js ***!
@@ -39670,11 +40148,17 @@ $(document).on("mousedown", function (e1) {
   $.fn.exists = function () {
     return this.length > 0;
   };
-})(jQuery); // Custom
+})(jQuery); // EasyTimer
+
+
+var _require = __webpack_require__(/*! easytimer.js/dist/easytimer.min */ "./node_modules/easytimer.js/dist/easytimer.min.js"),
+    Timer = _require.Timer; // Custom
 
 
 TabList = __webpack_require__(/*! ./tabs */ "./resources/js/tabs.js").TabList;
 GMTeam = __webpack_require__(/*! ./gm_team */ "./resources/js/gm_team.js").GMTeam;
+PlayerRiddle = __webpack_require__(/*! ./player_riddle */ "./resources/js/player_riddle.js").PlayerRiddle;
+PlayerRiddleGrid = __webpack_require__(/*! ./player_riddle */ "./resources/js/player_riddle.js").PlayerRiddleGrid;
 
 /***/ }),
 
@@ -40085,6 +40569,166 @@ exports.MessageTemplate = MessageTemplate;
 
 /***/ }),
 
+/***/ "./resources/js/player_riddle.js":
+/*!***************************************!*\
+  !*** ./resources/js/player_riddle.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var PlayerRiddleFactory = function () {
+  return {
+    construct: function construct(root) {
+      // fills the node
+      var template = $('#player-riddle-template');
+      if (!template.exists()) throw Error('player-riddle-template does not exist');
+      template.clone().appendTo(root);
+    }
+  };
+}();
+
+var PlayerRiddle =
+/*#__PURE__*/
+function () {
+  function PlayerRiddle(root) {
+    _classCallCheck(this, PlayerRiddle);
+
+    // assures that root node is quite correct
+    if (!(root instanceof jQuery)) {
+      if (typeof root !== 'string') throw 'Invalid parameter in constructor of TabList.';
+      root = $(root);
+    }
+
+    this.root = root; // defines a unique id
+
+    var id = this.root.attr('id');
+
+    if ($(this.accordion_prefix + id).exists()) {
+      var disamb = 1;
+      id = id + '-' + disamb;
+
+      while ($(this.accordion_prefix + id).exists()) {
+        id = id + '-' + ++disamb;
+      }
+    } // saves id
+
+
+    this.id = id; // constructs
+
+    PlayerRiddleFactory.construct(root);
+  }
+
+  _createClass(PlayerRiddle, [{
+    key: "setAttributes",
+    value: function setAttributes(options) {
+      if (options.title) this.setTitle(options.title);
+      if (options.subtitle) this.setSubtitle(options.subtitle);
+      if (options.description) this.setDescription(options.description);
+      if (options.showTimer) this.showTimer(options.showTimer);
+      if (options.showButtons) this.showButtons(options.showButtons);
+    }
+  }, {
+    key: "setTitle",
+    value: function setTitle(str) {
+      this.root.find('.card-title').text(str);
+    }
+  }, {
+    key: "setSubtitle",
+    value: function setSubtitle(str) {
+      this.root.find('.card-subtitle').text(str);
+    }
+  }, {
+    key: "setDescription",
+    value: function setDescription(str) {
+      this.root.find('.card-text').text(str);
+    }
+  }, {
+    key: "showButton",
+    value: function showButton(option) {
+      var show = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      if (show) {
+        this.root.find('.' + option + '-button').show();
+      } else {
+        this.root.find('.' + option + '-button').hide();
+      }
+    }
+  }, {
+    key: "showButtons",
+    value: function showButtons(options) {
+      var _this = this;
+
+      Object.keys(options).forEach(function (key) {
+        options[key] ? _this.root.find('.' + key + '-button').show() : _this.root.find('.' + key + '-button').hide();
+      });
+    }
+  }, {
+    key: "showTimer",
+    value: function showTimer() {
+      var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (show) {
+        this.root.find('.timer').show();
+      } else {
+        this.root.find('.timer').hide();
+      }
+    }
+  }]);
+
+  return PlayerRiddle;
+}();
+
+var PlayerRiddleGrid =
+/*#__PURE__*/
+function () {
+  function PlayerRiddleGrid(root) {
+    _classCallCheck(this, PlayerRiddleGrid);
+
+    if (!(root instanceof jQuery)) {
+      if (typeof root !== 'string') throw 'Invalid parameter in constructor of TabList.';
+      root = $(root);
+    }
+
+    this.root = root;
+    this.id = root.prop('id');
+    this.addRow();
+  }
+
+  _createClass(PlayerRiddleGrid, [{
+    key: "addRow",
+    value: function addRow() {
+      var rowNumber = this.root.children().length + 1;
+      var container = $('<div>', {
+        "class": 'container-fluid jumbotron player-riddle-row'
+      });
+      container.append($('<div>', {
+        "class": 'row justify-content-around'
+      }));
+      this.root.append(container);
+    }
+  }, {
+    key: "addPlayerRiddle",
+    value: function addPlayerRiddle(rowNumber) {
+      var row = this.root.find('.player-riddle-row:nth-child(' + rowNumber + ') .row').first();
+      var playerRiddleNumber = row.children().length + 1;
+      return new PlayerRiddle(row);
+    }
+  }]);
+
+  return PlayerRiddleGrid;
+}();
+
+exports.PlayerRiddle = PlayerRiddle;
+exports.PlayerRiddleGrid = PlayerRiddleGrid;
+
+/***/ }),
+
 /***/ "./resources/js/tabs.js":
 /*!******************************!*\
   !*** ./resources/js/tabs.js ***!
@@ -40382,8 +41026,8 @@ exports.TabList = TabList;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/tse-escape-tracking/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/tse-escape-tracking/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Programmes\wamp64\www\tse-escape-tracking\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Programmes\wamp64\www\tse-escape-tracking\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
