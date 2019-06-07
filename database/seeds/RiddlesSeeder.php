@@ -12,11 +12,11 @@ class RiddlesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('riddles')->delete();
+        DB::table('riddles')->truncate();
         $faker = Faker::create();
         foreach (range(1, 10) as $index) {
             DB::table('riddles')->insert([
-                'name' => $faker->sentence(random_int(5, 15)),
+                'name' => $faker->sentence(random_int(2, 5)),
                 'url' => $faker->url,
                 'code' => $faker->randomNumber()
             ]);

@@ -12,7 +12,7 @@ class RoomsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('rooms')->delete();
+        DB::table('rooms')->truncate();
         $faker = Faker::create();
         foreach (range(1, 10) as $index) {
             DB::table('rooms')->insert([

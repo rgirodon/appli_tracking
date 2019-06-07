@@ -3,7 +3,7 @@
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
-class TeamsTableSeeder extends Seeder
+class TeamsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        DB::table('teams')->delete();
+        DB::table('teams')->truncate();
         DB::table('teams')->insert([
             'name' => 'gamemaster',
             'password' => bcrypt('1234'),

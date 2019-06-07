@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call([
-            TeamsTableSeeder::class,
+            TeamsSeeder::class,
             RiddlesSeeder::class,
             MessagesSeeder::class,
-            RoomsSeeder::class
+            RoomsSeeder::class,
+            RoomTeamSeeder::class
         ]);
         /*Eloquent::unguard();
         $this->call(UsersTablesSeeder::class);*/

@@ -12,17 +12,19 @@ class MessagesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('messages')->delete();
         $faker = Faker::create();
-        //TODO réparer MessagesSeeder
-//        foreach (range(1, 10) as $index) {
-//            DB::table('messages')->insert([
-//                'content' => $faker->sentences(random_int(1, 5)),
-//                'date' => $faker->dateTimeThisMonth(),
-//                // TODO de vrais id des tables correspondantes
-//                'room_id' => random_int(1,3),
-//                'team_id' => random_int(1, 3)
-//            ]);
-//        }
+        DB::table('messages')->truncate();
+        foreach (range(1, 10) as $room_index) {
+            foreach (range(1, 10) as $message_index) {
+                $possible_team = [$room_index, 1]; // l'équipe N ou le gm (1),
+                // pour que ce soit un message joueur ou gm au pif
+                DB::table('messages')->insert([
+                    'content' => join('', $faker->sentences(random_int(1, 5))),
+                    'date' => $faker->dateTimeThisMonth(),
+                    'room_id' => $room_index,
+                    'team_id' => $possible_team[array_rand($possible_team)]
+                ]);
+            }
+        }
     }
 }
