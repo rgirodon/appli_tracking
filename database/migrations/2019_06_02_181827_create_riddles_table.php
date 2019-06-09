@@ -16,6 +16,7 @@ class CreateRiddlesTable extends Migration
         Schema::create('riddles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description');
             $table->string('url')->nullable();
             $table->string('code')->nullable();
             $table->boolean('disabled')->default(0);
