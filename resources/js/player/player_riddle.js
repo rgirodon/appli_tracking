@@ -1,3 +1,6 @@
+const {Timer} = require('easytimer.js');
+
+
 const PlayerRiddleFactory = (function () {
     return {
         construct: function (root, id) {
@@ -13,6 +16,7 @@ const PlayerRiddleFactory = (function () {
     };
 })();
 
+
 class PlayerRiddle {
     constructor(root, id) {
         // assures that root node is quite correct
@@ -24,6 +28,12 @@ class PlayerRiddle {
 
         // saves id
         this.id = id;
+
+        // timer
+        this.timer = new Timer();
+        this.timer.addEventListener('secondsUpdated', () => {
+            this.root.find('.timer').text(this.timer.getTimeValues().toString(['minutes', 'seconds']));
+        });
 
         // constructs
         this.root = PlayerRiddleFactory.construct(root, id);
@@ -54,6 +64,7 @@ class PlayerRiddle {
                 validate: false,
                 cancel: false
             });
+            this.showTimer(false);
             // todo reset timer, ajax
         })
     }
@@ -103,6 +114,18 @@ class PlayerRiddle {
         } else {
             this.root.find('.timer').hide();
         }
+    }
+
+    timerFrom(date) {
+        if (!(date instanceof Date))
+            date = new Date(date);
+        const ms = Date.now() - date.getTime();
+        const sec = Math.floor(ms / 1000);
+        this.timer.start({
+            startValues: {
+                seconds: sec
+            }
+        });
     }
 }
 

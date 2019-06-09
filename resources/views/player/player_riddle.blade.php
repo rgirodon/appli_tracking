@@ -73,6 +73,7 @@
             showButtons: {validate: true, cancel: true, start: false},
             description: 'Description : Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
         });
+        playerRiddle2_1.timerFrom(Date.now());
         // ces énigmes seront vides de mots
         const playerRiddle2_2 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_2');
         const playerRiddle2_3 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_3');

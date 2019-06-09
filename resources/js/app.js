@@ -33,17 +33,6 @@ require('./bootstrap');
 
 const $ = require('jquery');
 
-$(document).ready(function () {
-
-    const MessageAPI = require('./messenger/MessageAPI').MessageAPI;
-
-
-    window.msg = new MessageAPI(1, '.collection', "#message-template", "#message-form");
-// const app = new Vue({
-//     el: '#app',
-// });
-
-});
 // jQuery-ui
 require('jquery-ui/ui/widgets/sortable');
 $(document).on("mousedown", function (e1) {
@@ -76,9 +65,6 @@ $(document).on("mousedown", function (e1) {
         return this.length > 0;
     }
 }(jQuery));
-
-// EasyTimer
-var { Timer } = require('easytimer.js/dist/easytimer.min');
 
 // Custom
 TabList = require('./tabs').TabList;
