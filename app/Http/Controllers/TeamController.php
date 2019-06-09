@@ -39,7 +39,7 @@ class TeamController extends Controller
     function home()
     {
         if (Auth::check())
-            return view('auth.successLoginTeams');
+            return view('player.home', ['logout_url' => 'player/logout']);
         else
             return redirect('player/login');
     }

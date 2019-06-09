@@ -35,17 +35,14 @@ Route::get('validationEnigme', 'ValidationEnigmeController@Index');
 Route::get('validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
 Route::get('validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');
 
+// Player
+Route::get('player/', 'PlayerController@home');
 
 // Temporaire (Démo)
 Route::get('/demo/onglets', function () {
-    return view('tabs', ['title' => 'Onglets']);
+    return view('layouts/tabs', ['title' => 'Onglets', 'logout_url' => ' ']);
 });
 
-Route::get('/demo/team', function () {
-    return view('gm/gm_team', ['title' => 'Équipe']);
-});
-
-// test player_riddle
-Route::get('/demo/player_riddle', function () {
-    return view('player/player_riddle', ['title' => 'Joueur énigme']);
+Route::get('/demo/gm/home', function () {
+    return view('gm/home', ['title' => 'Équipe']);
 });

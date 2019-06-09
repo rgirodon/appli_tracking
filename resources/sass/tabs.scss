@@ -8,6 +8,11 @@
   }
 }
 
-.nav-link.notifying {
-  animation: flicker alternate infinite 1s;
+.tabs {
+  background-color: white !important;
+
+  .nav-link.notifying {
+    animation: flicker alternate infinite 1s;
+  }
 }
+

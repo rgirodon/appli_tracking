@@ -48,8 +48,12 @@
         </div>
     </template>
 
-    {{--div de base de la grille d'énigmes--}}
-    <div id="mySuperRiddleGrid"></div>
+    {{--Création des onglets--}}
+    <script>
+        tablist.addTab({title: 'Accueil', active: true});
+        tablist.addTab({title: 'Salon de clavardage avec les Game masters'});
+        tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'})); {{--div de base de la grille d'énigmes--}}
+    </script>
 
     <script>
         // on commence par créer une PlayerRiddleGrid sur la div sélectionnée
@@ -78,14 +82,4 @@
         const playerRiddle2_2 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_2');
         const playerRiddle2_3 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_3');
     </script>
-
-    {{--TODO chrono--}}
-    {{--    <div id="basicUsage">00:00:00</div>--}}
-    {{--    <script>--}}
-    {{--        var timer = new Timer();--}}
-    {{--        timer.start();--}}
-    {{--        timer.addEventListener('secondsUpdated', function (e) {--}}
-    {{--            $('#basicUsage').html(timer.getTimeValues().toString());--}}
-    {{--        });--}}
-    {{--    </script>--}}
 @endsection

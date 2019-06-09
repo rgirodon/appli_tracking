@@ -12231,7 +12231,11 @@ a.text-dark:focus {
   }
 }
 
-.nav-link.notifying {
+.tabs {
+  background-color: white !important;
+}
+
+.tabs .nav-link.notifying {
   -webkit-animation: flicker alternate infinite 1s;
           animation: flicker alternate infinite 1s;
 }

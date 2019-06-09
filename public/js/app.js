@@ -41254,6 +41254,7 @@ function () {
       root = $(root);
     }
 
+    root.addClass('tabs shadow-sm');
     var navlist = root.find('.nav-tabs');
 
     if (navlist.length === 0) {

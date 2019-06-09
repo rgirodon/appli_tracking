@@ -2,8 +2,6 @@
 
 @section('content')
     <div class="container box">
-        {{--<h3 align="center">Simple Login System in Laravel</h3><br />--}}
-
         @if(isset(Auth::user()->name))
             <script>window.location = "/gm";</script>
         @endif

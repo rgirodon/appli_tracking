@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: thomas
- * Date: 07/06/19
- * Time: 16:42
- */
 
 namespace App\Http\Controllers;
-
 
 use App\Riddle;
 use Illuminate\Http\JsonResponse;

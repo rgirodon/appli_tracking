@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Riddle;
 use App\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 
 class RiddlePolicy
 {
