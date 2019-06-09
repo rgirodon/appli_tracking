@@ -20,6 +20,7 @@ class CreateRiddlesTable extends Migration
             $table->string('url')->nullable();
             $table->string('code')->nullable();
             $table->boolean('disabled')->default(0);
+            $table->integer('line')->unsigned();
         });
     }
 

@@ -45,7 +45,9 @@ class PlayerRiddle {
                 validate: true,
                 cancel: true
             });
-            // todo start chrono, ajax
+            this.showTimer();
+            this.startTimerFromDate(Date.now());
+            $.ajax('riddle/' + this.id + '/start');
         });
 
         //  validate button modifies the modal when clicking
@@ -53,8 +55,16 @@ class PlayerRiddle {
             const modal = $('#validation-modal');
             modal.find('.modal-title').text('Validez ' + root.find('.card-title').text() + '\u00A0:');
             const form = modal.find('form');
-            const url_base = form.attr('action').match(/(.*\/)/g)[0];
-            form.attr('action', url_base + this.id); // todo mettre le bon id dans l'action du form
+            form.on('submit', (e) => {
+                e.preventDefault();
+                if (form.find('#validation-modal-code').val()) {
+                    $.ajax('validationEnigme/validationMdp/' + this.id, {
+                        success: (data) => {
+                            playerRiddleGrid.update();
+                        }
+                    });
+                }
+            });
         });
 
         // cancel button
@@ -64,22 +74,25 @@ class PlayerRiddle {
                 validate: false,
                 cancel: false
             });
+            this.timer.stop();
             this.showTimer(false);
-            // todo reset timer, ajax
+            // todo ajax cancel
         })
     }
 
     setAttributes(options) {
-        if (options.title)
-            this.setTitle(options.title);
-        if (options.subtitle)
-            this.setSubtitle(options.subtitle);
         if (options.description)
             this.setDescription(options.description);
-        if (options.showTimer)
-            this.showTimer(options.showTimer);
+        if (options.id)
+            this.setID(options.id);
         if (options.showButtons)
             this.showButtons(options.showButtons);
+        if (options.showTimer)
+            this.showTimer(options.showTimer);
+        if (options.subtitle)
+            this.setSubtitle(options.subtitle);
+        if (options.title)
+            this.setTitle(options.title);
     }
 
     setTitle(str) {
@@ -92,6 +105,17 @@ class PlayerRiddle {
 
     setDescription(str) {
         this.root.find('.card-text').text(str);
+    }
+
+    setID(id) {
+        this.id = id;
+        this.root.find('.player-riddle-card').last().attr('id', id);
+    }
+
+    setTimer(date) {
+        if (!(date instanceof Date))
+            date = new Date(date);
+        this.root.find('.timer').text(date.toTimeString().split(' ')[0]);
     }
 
     showButton(option, show = true) {
@@ -116,7 +140,7 @@ class PlayerRiddle {
         }
     }
 
-    timerFrom(date) {
+    startTimerFromDate(date) {
         if (!(date instanceof Date))
             date = new Date(date);
         const ms = Date.now() - date.getTime();
@@ -139,6 +163,9 @@ class PlayerRiddleGrid {
         this.root = root;
         this.id = root.prop('id');
         this.addRow();
+
+        this.playerRiddles = [];
+        this.rowNumber = 0;
     }
 
     addRow() {
@@ -146,12 +173,52 @@ class PlayerRiddleGrid {
         const container = $('<div>', {class: 'container-fluid jumbotron player-riddle-row'});
         container.append($('<div>', {class: 'row justify-content-around'}));
         this.root.append(container);
+        this.rowNumber++;
     }
 
     addPlayerRiddle(rowNumber, id) {
         const row = this.root.find('.player-riddle-row:nth-child(' + rowNumber + ') .row').first();
         const playerRiddleNumber = row.children().length + 1;
-        return new PlayerRiddle(row, id);
+        const playerRiddle = new PlayerRiddle(row, id);
+        this.playerRiddles.push(playerRiddle);
+        return playerRiddle;
+    }
+
+    updateRiddles(riddleJSON) {
+        const riddles = riddleJSON.riddles;
+        riddles.forEach((riddle) => {
+            let playerRiddle = this.playerRiddles.find((e) => {
+                return e.id === riddle.id;
+            });
+            if (playerRiddle === undefined) {
+                if (riddle.line > this.rowNumber)
+                    this.addRow();
+                playerRiddle = this.addPlayerRiddle(riddle.line);
+            }
+            playerRiddle.setAttributes({
+                id: riddle.id,
+                title: riddle.name,
+                description: riddle.description,
+                url: riddle.url
+            });
+            if (riddle.start_date) {
+                if (riddle.end_date) {
+                    const start = new Date(riddle.start_date);
+                    const end = new Date(riddle.end_date);
+                    playerRiddle.showButtons({
+                        start: false
+                    });
+                    playerRiddle.setTimer(end - start);
+                } else {
+                    playerRiddle.startTimerFromDate(riddle.start_date);
+                    playerRiddle.showButtons({start: false, validate: true, cancel: true});
+                }
+            }
+        });
+    };
+
+    update() {
+        $.ajax('riddle/list', {method: 'GET', success: (response) => this.updateRiddles(response)});
     }
 }
 

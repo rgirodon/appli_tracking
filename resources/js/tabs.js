@@ -77,10 +77,10 @@ class TabList {
                 throw 'Invalid parameter in constructor of TabList.';
             root = $(root);
         }
-        root.addClass('tabs shadow-sm');
+        root.addClass('tabs');
         const navlist = root.find('.nav-tabs');
         if (navlist.length === 0) {
-            root.append($('<ul>', {class: 'nav nav-tabs'})
+            root.append($('<ul>', {class: 'nav nav-tabs shadow-sm'})
                 .attr('role', 'tablist')
                 .sortable({
                     connectWith: root.find('.nav-tabs'),

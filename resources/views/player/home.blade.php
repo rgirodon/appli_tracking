@@ -12,7 +12,7 @@
                     </button>
                 </div>
                 <div class="modal-body row">
-                    <form class="col" action="{{ url('/validationEnigme/validationMdp/1')}}">
+                    <form class="col">
                         <div class="form-group">
                             <label for="validation-modal-code" class="form-control-label">Veuillez entrer le code que vous avez reçu à la fin de cette énigme</label>
                             <input type="text" class="form-control" name="code" id="validation-modal-code" placeholder="Entrez le code ici">
@@ -30,7 +30,7 @@
             <div class="card-body">
                 <div class="row mx-auto justify-content-between">
                     <h5 class="card-title"></h5>
-                    <span class="timer" style="display: none;">00:00</span>
+                    <span class="timer">00:00</span>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text"></p>
@@ -51,35 +51,14 @@
     {{--Création des onglets--}}
     <script>
         tablist.addTab({title: 'Accueil', active: true});
-        tablist.addTab({title: 'Salon de clavardage avec les Game masters'});
-        tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'})); {{--div de base de la grille d'énigmes--}}
+        tablist.addTab({title: 'Salon de clavardage avec les Game Masters'});
     </script>
 
+    {{--Création des énigmes au chargement de la page--}}
     <script>
-        // on commence par créer une PlayerRiddleGrid sur la div sélectionnée
+        tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'})); {{--div de base de la grille d'énigmes--}}
         const playerRiddleGrid = new PlayerRiddleGrid('#mySuperRiddleGrid');
-        // on ajoute une PlayerRiddle à la ligne par défaut (la numéro 1)
-        const playerRiddle1_1 = playerRiddleGrid.addPlayerRiddle(1, 'playerRiddle1_1');
-        // on peut modifier les attributs d'une PlayerRiddle un par un
-        playerRiddle1_1.setTitle('Nom énigme 1');
-        playerRiddle1_1.setSubtitle('Sous-titre');
-        playerRiddle1_1.setDescription('Description : Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
-
-        // on ajoute une nouvelle ligne
-        playerRiddleGrid.addRow();
-        // on ajoute une nouvelle énigme à la ligne 2
-        const playerRiddle2_1 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_1');
-        // on peut aussi modifier les atributs avec un array object
-        playerRiddle2_1.setAttributes({
-            title: 'Nom énigme 2',
-            subtitle: 'Sous-titre',
-            showTimer: true,
-            showButtons: {validate: true, cancel: true, start: false},
-            description: 'Description : Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-        });
-        playerRiddle2_1.timerFrom(Date.now());
-        // ces énigmes seront vides de mots
-        const playerRiddle2_2 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_2');
-        const playerRiddle2_3 = playerRiddleGrid.addPlayerRiddle(2, 'playerRiddle2_3');
+        const res = playerRiddleGrid.update();
+        console.log(res);
     </script>
 @endsection

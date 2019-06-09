@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white">
     <div class="container">
         <div class="row justify-content-end w-100">
             <div class="" id="navbarSupportedContent">

@@ -20,7 +20,8 @@ class RiddlesSeeder extends Seeder
             'name' => 'L\'Amphithéâtre',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/Amphi/public/index.php/accueilAmphi',
-            'code' => 0
+            'code' => 0,
+            'line' => 1
         ]);
 
         // mootse : ligne seule
@@ -28,7 +29,8 @@ class RiddlesSeeder extends Seeder
             'name' => 'Mootse',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/Mooste/index.html',
-            'code' => 0
+            'code' => 0,
+            'line' => 2
         ]);
 
         // premier embranchement : ballade dans TSE
@@ -36,19 +38,22 @@ class RiddlesSeeder extends Seeder
             'name' => 'La Salle Newsplex',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
-            'code' => 0
+            'code' => 0,
+            'line' => 3
         ]);
         DB::table('riddles')->insert([
             'name' => 'Les Objets de Téo',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
-            'code' => 0
+            'code' => 0,
+            'line' => 3
         ]);
         DB::table('riddles')->insert([
             'name' => 'Les Voyages de Téo',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
-            'code' => 0
+            'code' => 0,
+            'line' => 3
         ]);
 
         // fusion de l'embranchement : cours des matières
@@ -56,7 +61,8 @@ class RiddlesSeeder extends Seeder
             'name' => 'La Cour des Matières',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/CDM',
-            'code' => 0
+            'code' => 0,
+            'line' => 4
         ]);
 
         // embranchement 2 : la cité du design
@@ -64,19 +70,22 @@ class RiddlesSeeder extends Seeder
             'name' => 'La Tour', // + arcade (détecteur de distance)
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
-            'code' => 0
+            'code' => 0,
+            'line' => 5
         ]);
         DB::table('riddles')->insert([
             'name' => 'Le Mixeur', // carré magique
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/CarreMagique/',
-            'code' => 0
+            'code' => 0,
+            'line' => 5
         ]);
         DB::table('riddles')->insert([
             'name' => 'La Fabrique de l\'Innovation', // code source
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/codesource',
-            'code' => 0
+            'code' => 0,
+            'line' => 5
         ]);
 
         // fusion de l'embranchement 2 : téléphone
@@ -84,7 +93,8 @@ class RiddlesSeeder extends Seeder
             'name' => 'Le Téléphone de Téo',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/telephone',
-            'code' => 0
+            'code' => 0,
+            'line' => 6
         ]);
 
         // énigme finale à l'incubateur
@@ -92,7 +102,8 @@ class RiddlesSeeder extends Seeder
             'name' => 'La Cour des Sciences',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
-            'code' => 0
+            'code' => 0,
+            'line' => 7
         ]);
     }
 }

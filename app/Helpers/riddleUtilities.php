@@ -68,9 +68,11 @@ if (!function_exists('riddle_info')) {
         return [
             'id' => $riddle->id,
             'name' => $riddle->name,
+            'description' => $riddle->description,
             'url' => $riddle->url,
             'start_date' => is_null($riddle_team) || is_null($riddle_team->pivot->start_date) ? null : new Carbon($riddle_team->pivot->start_date),
-            'end_date' => is_null($riddle_team) || is_null($riddle_team->pivot->end_date) ? null : new Carbon($riddle_team->pivot->end_date)
+            'end_date' => is_null($riddle_team) || is_null($riddle_team->pivot->end_date) ? null : new Carbon($riddle_team->pivot->end_date),
+            'line' => $riddle->line
         ];
     }
 }

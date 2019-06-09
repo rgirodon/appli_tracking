@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ValidationMdpController extends Controller
 {
-
-
     function checkMdp($id, Request $request)
     {
-        $riddledb=Riddle::find($id);
+        $riddledb = Riddle::find($id);
         $this->authorize('validateRiddle', $riddledb);
 
-        if ($riddledb->code == $request->input('code'))
-        {
+        if ($riddledb->code == $request->input('code')) {
             end_riddle($riddledb, Auth::user());
-
         }
 
         return JsonResponse::create([
@@ -29,7 +25,6 @@ class ValidationMdpController extends Controller
                 'display' => true
             ]
         ]);
-
     }
 
 }

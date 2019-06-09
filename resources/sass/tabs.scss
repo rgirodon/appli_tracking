@@ -11,6 +11,10 @@
 .tabs {
   background-color: white !important;
 
+  .nav {
+    margin-bottom: 2rem;
+  }
+
   .nav-link.notifying {
     animation: flicker alternate infinite 1s;
   }
