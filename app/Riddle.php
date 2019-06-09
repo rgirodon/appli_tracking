@@ -25,4 +25,14 @@ class Riddle extends Model
     {
         return $this->belongsToMany('App\Team', 'riddles_teams')->withPivot('start_date', 'end_date');
     }
+
+    public function parents()
+    {
+        return $this->belongsToMany(Riddle::class, 'riddles_riddles', 'child_id', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->belongsToMany(Riddle::class, 'riddles_riddles', 'parent_id', 'child_id');
+    }
 }

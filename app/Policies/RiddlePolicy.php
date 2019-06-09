@@ -12,8 +12,19 @@ class RiddlePolicy
     use HandlesAuthorization;
 
     public function validateRiddle(Team $team, Riddle $riddle){
-        return !is_null($team) &&
-        !is_null($riddle->teams->where('id', Auth::user()->id)->first()->pivot->start_date);
+        return !is_null($team) && !$team->isGM
+            && !is_null($riddle->teams->where('id', $team->id)->first())
+            && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date);
+    }
+
+    public function startRiddle(Team $team, Riddle $riddle)
+    {
+        return !is_null($team) && !$team->isGM;
+    }
+
+    public function listRiddles(Team $team)
+    {
+        return !is_null($team) && !$team->isGM;
     }
 
 }
