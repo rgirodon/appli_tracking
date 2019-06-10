@@ -76,3 +76,15 @@ if (!function_exists('riddle_info')) {
         ];
     }
 }
+
+if (!function_exists('riddle_info_for_gm')) {
+    function riddle_info_for_gm(Riddle $riddle, Team $team)
+    {
+        $riddle_team = $riddle->teams->where('id', $team->id)->first();
+        return [
+            'id' => $riddle->id,
+            'start_date' => is_null($riddle_team) || is_null($riddle_team->pivot->start_date) ? null : new Carbon($riddle_team->pivot->start_date),
+            'end_date' => is_null($riddle_team) || is_null($riddle_team->pivot->end_date) ? null : new Carbon($riddle_team->pivot->end_date),
+        ];
+    }
+}

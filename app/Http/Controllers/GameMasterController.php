@@ -34,9 +34,10 @@ class GameMasterController extends Controller
 
     function home()
     {
-        if (Auth::check() and Auth::user()->isGM)
-            return view('gm.home', ['logout_url' => '/gm/logout']);
-        else if (Auth::check())
+        if (Auth::check() and Auth::user()->isGM) {
+            $gm = Auth::user();
+            return view('gm.home', ['logout_url' => '/gm/logout'])->withTitle($gm->getAttribute('name'));
+        } else if (Auth::check())
             return redirect('/');
         else
             return redirect('gm/login');

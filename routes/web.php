@@ -35,5 +35,8 @@ Route::get('validationEnigme', 'ValidationEnigmeController@Index');
 Route::get('validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
 Route::get('validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');
 
+// RiddlesTeams
+Route::get('riddleteam/list', 'RiddleTeamController@listRiddlesTeams');
+
 // Player
 Route::get('player/', 'PlayerController@home');

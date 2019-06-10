@@ -1,5 +1,20 @@
 const {Timer} = require('easytimer.js');
 
+function formatMS(s) {
+    function pad(n, z) {
+        z = z || 2;
+        return ('00' + n).slice(-z);
+    }
+
+    const ms = s % 1000;
+    s = (s - ms) / 1000;
+    const secs = s % 60;
+    s = (s - secs) / 60;
+    const mins = s % 60;
+    const hrs = (s - mins) / 60;
+    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
+}
+
 
 const PlayerRiddleFactory = (function () {
     return {
@@ -61,6 +76,7 @@ class PlayerRiddle {
                     $.ajax('validationEnigme/validationMdp/' + this.id, {
                         success: (data) => {
                             playerRiddleGrid.update();
+                            alert('success'); // todo RÉPARER puis enlever ça
                         }
                     });
                 }
@@ -112,10 +128,8 @@ class PlayerRiddle {
         this.root.find('.player-riddle-card').last().attr('id', id);
     }
 
-    setTimer(date) {
-        if (!(date instanceof Date))
-            date = new Date(date);
-        this.root.find('.timer').text(date.toTimeString().split(' ')[0]);
+    setTimer(ms) {
+        this.root.find('.timer').text(formatMS(ms));
     }
 
     showButton(option, show = true) {

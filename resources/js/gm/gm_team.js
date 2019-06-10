@@ -1,3 +1,18 @@
+function formatMS(s) {
+    function pad(n, z) {
+        z = z || 2;
+        return ('00' + n).slice(-z);
+    }
+
+    const ms = s % 1000;
+    s = (s - ms) / 1000;
+    const secs = s % 60;
+    s = (s - secs) / 60;
+    const mins = s % 60;
+    const hrs = (s - mins) / 60;
+    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
+}
+
 const GMTeamFactory = (function () {
     const class_prefix = 'gm-team';
     const accordion_prefix = class_prefix + '-accordion-';
@@ -51,7 +66,7 @@ const GMTeamFactory = (function () {
 })();
 
 class GMTeam {
-    constructor(root) {
+    constructor(root, id) {
         // assures that root node is quite correct
         if (!(root instanceof jQuery)) {
             if (typeof root !== 'string')
@@ -60,21 +75,20 @@ class GMTeam {
         }
         this.root = root;
 
-        // defines a unique id
-        let id = this.root.attr('id');
-        if ($(this.accordion_prefix + id).exists()) {
-            let disamb = 1;
-            id = id + '-' + disamb;
-            while ($(this.accordion_prefix + id).exists()) {
-                id = id + '-' + ++disamb;
-            }
-        }
-
         // saves id
         this.id = id;
 
         // constructs and retrieves ids
         this.ids = GMTeamFactory.construct(root, id);
+    }
+
+    setAtributes(options) {
+        if (options.teamName)
+            this.setTeamName(options.teamName);
+        if (options.riddleName)
+            this.setRiddleName(options.riddleName);
+        if (options.progress)
+            this.setProgress(options.progress);
     }
 
     setTeamName(str) {
@@ -100,4 +114,57 @@ class GMTeam {
     }
 }
 
+class GMTeamList {
+    constructor(root) {
+        // assures that root node is quite correct
+        if (!(root instanceof jQuery)) {
+            if (typeof root !== 'string')
+                throw 'Invalid parameter in constructor of TabList.';
+            root = $(root);
+        }
+        this.root = root;
+
+        this.gmTeams = [];
+    }
+
+    addGMTeam(id) {
+        const newDiv = $('<div>', {id: id});
+        this.root.append(newDiv);
+        const gmTeam = new GMTeam(newDiv, id);
+        this.gmTeams.push(gmTeam);
+        return gmTeam;
+    }
+
+    updateTeams(teamJSON) {
+        const names = teamJSON.riddle_names;
+        const data = teamJSON.data;
+        data.forEach((data) => {
+            const team = data.team;
+            const riddles = data.riddles;
+            const gmteam = this.addGMTeam('gm-team-' + team.id);
+            // todo à améliorer en prenant en compte les temps (pour l'instant on prend la dernière)
+            const currentRiddle = riddles.pop();
+            gmteam.setAtributes({
+                teamName: team.name,
+                riddleName: names[currentRiddle.id - 1],
+                progress: 100 * (currentRiddle.id / 11)
+            });
+            // détail
+            const list = gmteam.root.find('.card-body ul');
+            riddles.forEach((riddle) => {
+                const content = $('<li>');
+                const start = new Date(riddle.start_date);
+                const end = new Date(riddle.end_date);
+                content.text(names[riddle.id - 1] + ' en ' + formatMS(end - start));
+                list.append(content);
+            });
+        });
+    }
+
+    update() {
+        $.ajax('riddleteam/list', {method: 'GET', success: (response) => this.updateTeams(response)});
+    }
+}
+
 exports.GMTeam = GMTeam;
+exports.GMTeamList = GMTeamList;

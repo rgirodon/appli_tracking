@@ -69,5 +69,6 @@ $(document).on("mousedown", function (e1) {
 // Custom
 TabList = require('./tabs').TabList;
 GMTeam = require('./gm/gm_team').GMTeam;
+GMTeamList = require('./gm/gm_team').GMTeamList;
 PlayerRiddle = require('./player/player_riddle').PlayerRiddle;
 PlayerRiddleGrid = require('./player/player_riddle').PlayerRiddleGrid;

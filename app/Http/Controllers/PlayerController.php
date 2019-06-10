@@ -9,7 +9,7 @@ class PlayerController extends Controller
 {
     public function home()
     {
-        $this->authorize('home', Team::class);
+        $this->authorize('isPlayer', Team::class);
 
         $team = Auth::user();
 

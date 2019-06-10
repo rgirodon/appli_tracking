@@ -25,6 +25,8 @@
                     </div>
                     <div class="collapse">
                         <div class="card-body">
+                            Terminées :
+                            <ul></ul>
                         </div>
                     </div>
                 </div>
@@ -37,12 +39,10 @@
         tablist.addTab({title: 'Suivi des équipes', active: true});
     </script>
 
-
-    <div id="mySuperTeam"></div>
+    <div id="gm-riddle-list"></div>
 
     <script>
-        const gmTeam1 = new GMTeam('#mySuperTeam');
-        gmTeam1.setTeamName('super équipe JS');
-        gmTeam1.setRiddleName('super énigme JS lorem ipsum dolor sit amet consectetur adipiscing elit')
+        const gmTeamList = new GMTeamList('#gm-riddle-list');
+        gmTeamList.update();
     </script>
 @endsection

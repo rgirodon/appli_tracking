@@ -9,7 +9,13 @@ class PlayerPolicy
 {
     use HandlesAuthorization;
 
-    public function home(Team $team){
+    public function isPlayer(Team $team)
+    {
         return !is_null($team) && !$team->isGM;
+    }
+
+    public function isGM(Team $team)
+    {
+        return !is_null($team) && $team->isGM;
     }
 }
