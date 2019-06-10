@@ -24,6 +24,7 @@ Route::post('gm/checklogin', 'GameMasterController@checklogin');
 Route::get('gm/logout', 'GameMasterController@logout');
 
 // Messenger
+Route::get('msg/list', 'MessengerController@listRooms');
 Route::post('msg/send/{room}', 'MessengerController@sendMessage');
 Route::get('msg/{room}', 'MessengerController@getMessages');
 

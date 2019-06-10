@@ -17,7 +17,6 @@ class MessageForm {
     }
 
     setup() {
-        console.log(this.form);
         this.form.addEventListener('submit', e => {
             e.preventDefault();
 

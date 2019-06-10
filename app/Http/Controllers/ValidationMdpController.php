@@ -16,12 +16,19 @@ class ValidationMdpController extends Controller
 
         if ($riddledb->code == $request->input('code')) {
             end_riddle($riddledb, Auth::user());
+            return JsonResponse::create([
+                'status' => [
+                    'type' => 'success',
+                    'message' => 'Énigme Validée',
+                    'display' => true
+                ]
+            ]);
         }
 
         return JsonResponse::create([
             'status' => [
-                'type' => 'success',
-                'message' => 'Énigme Validée',
+                'type' => 'error',
+                'message' => 'Code invalide',
                 'display' => true
             ]
         ]);

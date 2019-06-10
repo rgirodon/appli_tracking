@@ -12,7 +12,7 @@ function formatMS(s) {
     s = (s - secs) / 60;
     const mins = s % 60;
     const hrs = (s - mins) / 60;
-    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
+    return (hrs > 0 ? pad(hrs) + ':' : '') + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
 }
 
 
@@ -47,7 +47,7 @@ class PlayerRiddle {
         // timer
         this.timer = new Timer();
         this.timer.addEventListener('secondsUpdated', () => {
-            this.root.find('.timer').text(this.timer.getTimeValues().toString(['minutes', 'seconds']));
+            this.displayTimerTime();
         });
 
         // constructs
@@ -75,11 +75,25 @@ class PlayerRiddle {
                 e.preventDefault();
                 if (form.find('#validation-modal-code').val()) {
                     $.ajax('validationEnigme/validationMdp/' + this.id, {
+                        data: form.serialize(),
                         success: (data) => {
-                            playerRiddleGrid.update();
-                            alert('success'); // todo RÉPARER puis enlever ça
+                            if (data.status.type === 'success') {
+                                this.timer.pause();
+                                this.showButtons({
+                                    start: false,
+                                    cancel: false,
+                                    validate: false
+                                });
+                                playerRiddleGrid.update();
+                            }
+                            // TODO Afficher status
+                            // if(data.status) {
+                            //     if(data.status.display)
+                            //         alert(data.status.message);
+                            // }
                         } //TODO Error handling
                     });
+                    modal.modal('hide');
                 }
             });
         });
@@ -165,6 +179,15 @@ class PlayerRiddle {
                 seconds: sec
             }
         });
+        this.displayTimerTime();
+    }
+
+    displayTimerTime() {
+        const val = this.timer.getTimeValues();
+        const fields = val.hours > 0 ? ['hours'] : [];
+        fields.push('minutes');
+        fields.push('seconds');
+        this.root.find('.timer').text(val.toString(fields));
     }
 }
 

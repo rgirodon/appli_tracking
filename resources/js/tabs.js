@@ -179,6 +179,8 @@ class TabList {
             if (settings.active) {
                 newTabLink.tab('show');
             }
+
+            return settings.position;
         }
     }
 

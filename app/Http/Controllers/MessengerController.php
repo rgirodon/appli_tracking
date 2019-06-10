@@ -60,4 +60,19 @@ class MessengerController extends Controller
             'messages' => $messages
         ]);
     }
+
+
+    public function listRooms()
+    {
+        // TODO Tests et faire mieux
+
+        return JsonResponse::create([
+            'status' => [
+                'type' => 'success',
+                'message' => 'Liste des salons récupérée',
+                'display' => false
+            ],
+            'rooms' => Auth::user()->rooms
+        ]);
+    }
 }

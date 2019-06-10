@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Room;
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,10 @@ class TeamController extends Controller
             $user->name = $name;
             $user->isGM = false;
             $user->saveOrFail();
-            //toDO creer la room et la lier avec les GM.
+            $room = new Room();
+            $room->name = 'Conversation ' . $name;
+            $user->rooms()->save($room);
+            //toDO lier la room avec les GM.
         }
         Auth::login($user);
         return redirect('/');
