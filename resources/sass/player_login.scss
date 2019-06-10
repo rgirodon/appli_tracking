@@ -4,11 +4,20 @@
     margin-right: 2rem;
   }
 
-  label {
-    font-size: 1.3rem;
+  @include media-breakpoint-up(sm) {
+    label {
+      font-size: 1.3rem;
+    }
+
+    button {
+      font-size: 1.3rem;
+    }
   }
 
-  button {
-    font-size: 1.3rem;
+  @include media-breakpoint-down(xsm) {
+    .btn {
+      padding-left: 0.2rem !important;
+      padding-right: 0.2rem !important;
+    }
   }
 }
