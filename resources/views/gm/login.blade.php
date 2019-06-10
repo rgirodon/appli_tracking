@@ -26,15 +26,15 @@
         <form method="post" action="{{ url('/gm/checklogin') }}">
             {{ csrf_field() }}
             <div class="form-group">
-                <label>Enter login</label>
-                <input type="text" name="name" class="form-control"/>
+                <label for="name">Entrez votre identifiant</label>
+                <input type="text" name="name" id="name" class="form-control"/>
             </div>
             <div class="form-group">
-                <label>Enter Password</label>
-                <input type="password" name="password" class="form-control"/>
+                <label for="password">Entrez votre mot de passe</label>
+                <input type="password" name="password" id="password" class="form-control"/>
             </div>
             <div class="form-group">
-                <input type="submit" name="login" class="btn btn-primary" value="Login"/>
+                <input type="submit" name="login" class="btn btn-primary" value="Connexion"/>
             </div>
         </form>
     </div>
