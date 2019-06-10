@@ -37,12 +37,3 @@ Route::get('validationEnigme/validationMdp/{id}', 'ValidationMdpController@check
 
 // Player
 Route::get('player/', 'PlayerController@home');
-
-// Temporaire (Démo)
-Route::get('/demo/onglets', function () {
-    return view('layouts/tabs', ['title' => 'Onglets', 'logout_url' => ' ']);
-});
-
-Route::get('/demo/gm/home', function () {
-    return view('gm/home', ['title' => 'Équipe']);
-});

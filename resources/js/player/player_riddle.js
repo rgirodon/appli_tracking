@@ -162,7 +162,6 @@ class PlayerRiddleGrid {
         }
         this.root = root;
         this.id = root.prop('id');
-        this.addRow();
 
         this.playerRiddles = [];
         this.rowNumber = 0;

@@ -9,7 +9,7 @@ class GameMasterController extends Controller
 {
     function login()
     {
-        return view('auth.login');
+        return view('gm.login');
     }
 
     function checklogin(Request $request)
@@ -35,7 +35,7 @@ class GameMasterController extends Controller
     function home()
     {
         if (Auth::check() and Auth::user()->isGM)
-            return view('auth.successlogin');
+            return view('gm.home', ['logout_url' => '/gm/logout']);
         else if (Auth::check())
             return redirect('/');
         else

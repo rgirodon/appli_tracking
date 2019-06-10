@@ -32,6 +32,12 @@
         </div>
     </template>
 
+    {{--Création des onglets--}}
+    <script>
+        tablist.addTab({title: 'Suivi des équipes', active: true});
+    </script>
+
+
     <div id="mySuperTeam"></div>
 
     <script>

@@ -1,0 +1,14 @@
+.player-login {
+  @include media-breakpoint-down(md) {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  label {
+    font-size: 1.3rem;
+  }
+
+  button {
+    font-size: 1.3rem;
+  }
+}

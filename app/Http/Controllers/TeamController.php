@@ -11,7 +11,7 @@ class TeamController extends Controller
 {
     public function login()
     {
-        return view('auth.loginTeams');
+        return view('player.login', ['logout_url' => 'player/logout']);
     }
 
     function checklogin(Request $request)
@@ -38,9 +38,14 @@ class TeamController extends Controller
 
     function home()
     {
-        if (Auth::check())
-            return view('player.home', ['logout_url' => 'player/logout']);
-        else
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->getAttribute('isGM')) {
+                return view('gm.home', ['logout_url' => 'player/logout']);
+            } else {
+                return view('player.home', ['logout_url' => 'player/logout']);
+            }
+        } else
             return redirect('player/login');
     }
 
