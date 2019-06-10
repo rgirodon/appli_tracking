@@ -31,6 +31,7 @@ Route::get('msg/{room}', 'MessengerController@getMessages');
 //Route::get('validationEnigme', 'ValidationEnigmeController@Index'); // todo check gaetan : normalement plus utile
 Route::get('riddle/list', 'RiddleController@listRiddles');
 Route::get('riddle/{id}/start', 'RiddleController@startRiddle');
+Route::get('riddle/{id}/cancel', 'RiddleController@cancelRiddle');
 Route::get('validationEnigme', 'ValidationEnigmeController@Index');
 Route::get('validationEnigme/validationMdp', 'ValidationMdpController@checkMdp');
 Route::get('validationEnigme/validationMdp/{id}', 'ValidationMdpController@checkMdp');

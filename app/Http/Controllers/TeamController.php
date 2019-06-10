@@ -40,8 +40,8 @@ class TeamController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->getAttribute('isGM')) {
-                return view('gm.home', ['logout_url' => 'player/logout']);
+            if ($user->isGM) {
+                return view('gm.home', ['logout_url' => 'gm/logout']);
             } else {
                 return view('player.home', ['logout_url' => 'player/logout']);
             }

@@ -61,8 +61,9 @@ class PlayerRiddle {
                 cancel: true
             });
             this.showTimer();
+            this.setTimer(0);
             this.startTimerFromDate(Date.now());
-            $.ajax('riddle/' + this.id + '/start');
+            $.ajax('riddle/' + this.id + '/start'); //TODO Error handling
         });
 
         //  validate button modifies the modal when clicking
@@ -77,7 +78,7 @@ class PlayerRiddle {
                         success: (data) => {
                             playerRiddleGrid.update();
                             alert('success'); // todo RÉPARER puis enlever ça
-                        }
+                        } //TODO Error handling
                     });
                 }
             });
@@ -92,7 +93,7 @@ class PlayerRiddle {
             });
             this.timer.stop();
             this.showTimer(false);
-            // todo ajax cancel
+            $.ajax('riddle/' + this.id + '/cancel'); //TODO Error handling
         })
     }
 

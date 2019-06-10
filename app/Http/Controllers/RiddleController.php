@@ -55,4 +55,22 @@ class RiddleController extends Controller
             ]
         ]);
     }
+
+
+    public function cancelRiddle($id, Request $request)
+    {
+        $riddle = Riddle::find($id);
+
+        $this->authorize('cancelRiddle', $riddle);
+
+        cancel_riddle($riddle, Auth::user());
+
+        return JsonResponse::create([
+            'status' => [
+                'type' => 'success',
+                'message' => 'Énigme annulée avec succès',
+                'display' => false
+            ]
+        ]);
+    }
 }
