@@ -18,10 +18,10 @@
                         <input type="radio" name="color" value="3">Bleu
                     </label>
                     <label class="btn btn-outline-warning">
-                        <input type="radio" name="color" value="4">Gris
+                        <input type="radio" name="color" value="4">Jaune
                     </label>
                     <label class="btn btn-outline-dark">
-                        <input type="radio" name="color" value="5">Noir
+                        <input type="radio" name="color" value="5">Violet
                     </label>
                 </div>
             </div>

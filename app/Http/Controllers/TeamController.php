@@ -35,10 +35,10 @@ class TeamController extends Controller
                 $color = 'Bleu';
                 break;
             case 4:
-                $color = 'Gris';
+                $color = 'Jaune';
                 break;
             case 5:
-                $color = 'Noir';
+                $color = 'Violet';
                 break;
             default:
                 throw new UnauthorizedException();
