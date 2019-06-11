@@ -34,6 +34,7 @@
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text"></p>
+                <a class="btn btn-info player-riddle-url my-1" style="display: none;">Lien vers l'énigme</a>
 
                 <div class="row mx-auto">
                     <button class="btn btn-primary start-button my-1">Commencer l'énigme</button>
@@ -66,13 +67,13 @@
 
     {{-- Template pour les salons --}}
     <template id="room-template">
-        <div class="message-container">
+        <div class="messenger-container container-fluid">
+            <div class="message-container"></div>
 
+            <form action="msg/send/{id}" method="post" class="message-form">
+                <input type="text" name="content">
+            </form>
         </div>
-
-        <form action="msg/send/{id}" method="post" class="message-form">
-            <input type="text" name="content">
-        </form>
     </template>
 
 
@@ -85,7 +86,8 @@
 
     {{--Création des énigmes au chargement de la page--}}
     <script>
-        tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'})); {{--div de base de la grille d'énigmes--}}
+        tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'}));
+                {{--div de base de la grille d'énigmes--}}
         const playerRiddleGrid = new PlayerRiddleGrid('#mySuperRiddleGrid');
         const res = playerRiddleGrid.update();
         console.log(res);

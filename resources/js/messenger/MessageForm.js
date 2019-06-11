@@ -17,24 +17,33 @@ class MessageForm {
     }
 
     setup() {
-        this.form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            $.ajax(this.form.action, {
-                method: this.form.method || 'post',
-                dataType: 'json',
-                data: $(this.form).serialize(),
-                error: (jqXHR, textStatus, errorThrown) => {
-                    console.error(textStatus || errorThrown);
-                    console.error(jqXHR);
-                },
-                success: (data, textStatus, jqXHR) => {
-                    if (this.handler)
-                        this.handler(data);
-                }
-            });
-
-        });
+        this.form.addEventListener('submit',
+            // _.debounce(
+                e => {
+                    e.preventDefault();
+                    if ($(this.form).find('input').val() !== "") {
+                        $.ajax(this.form.action, {
+                            method: this.form.method || 'post',
+                            dataType: 'json',
+                            data: $(this.form).serialize(),
+                            error: (jqXHR, textStatus, errorThrown) => {
+                                console.error(textStatus || errorThrown);
+                                console.error(jqXHR);
+                            },
+                            success: (data, textStatus, jqXHR) => {
+                                if (this.handler)
+                                    this.handler(data);
+                                $(this.form).find('input').val('');
+                            }
+                        })
+                    }
+                })
+            // ,
+            // 250,
+            // {
+            //     leading: true,
+            //     trailing: false
+            // })
     }
 }
 

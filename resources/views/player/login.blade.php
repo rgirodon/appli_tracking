@@ -9,19 +9,19 @@
             <div class="row">
                 <div class="btn-group btn-group-toggle w-100">
                     <label class="btn btn-outline-danger">
-                        <input type="radio" name="color" value="Rouge">Rouge
+                        <input type="radio" name="color" value="1">Rouge
                     </label>
                     <label class="btn btn-outline-success">
-                        <input type="radio" name="color" value="Verte">Vert
+                        <input type="radio" name="color" value="2">Vert
                     </label>
                     <label class="btn btn-outline-primary">
-                        <input type="radio" name="color" value="Bleue">Bleu
+                        <input type="radio" name="color" value="3">Bleu
                     </label>
                     <label class="btn btn-outline-warning">
-                        <input type="radio" name="color" value="Jaune">Jaune
+                        <input type="radio" name="color" value="4">Gris
                     </label>
                     <label class="btn btn-outline-dark">
-                        <input type="radio" name="color" value="Violet">Violet
+                        <input type="radio" name="color" value="5">Noir
                     </label>
                 </div>
             </div>

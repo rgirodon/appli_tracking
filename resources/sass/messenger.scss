@@ -35,6 +35,11 @@ $msg_other_bg: $gray;
   }
 }
 
+.messenger-container {
+  width: 95%;
 
-.collection {
+  .message-form {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
 }

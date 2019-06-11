@@ -6,6 +6,7 @@ use App\Room;
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
 
 
 class TeamController extends Controller
@@ -22,7 +23,33 @@ class TeamController extends Controller
             'num' => 'required'
         ]);
 
-        $name = $request->input('color') . $request->input('num');
+        $color = 0;
+        switch ($request->input('color')) {
+            case 1:
+                $color = 'Rouge';
+                break;
+            case 2:
+                $color = 'Vert';
+                break;
+            case 3:
+                $color = 'Bleu';
+                break;
+            case 4:
+                $color = 'Gris';
+                break;
+            case 5:
+                $color = 'Noir';
+                break;
+            default:
+                throw new UnauthorizedException();
+        }
+
+        $num = $request->input('num');
+        // todo : check input
+        // if ($num)
+        // throw new UnauthorizedException();
+
+        $name = $color . ' ' . $num;
 
         $user = Team::where('name', '=', $name)->first();
 

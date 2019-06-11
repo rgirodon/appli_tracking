@@ -18,7 +18,7 @@ function formatMS(s) {
 
 const PlayerRiddleFactory = (function () {
     return {
-        construct: function (root, id) {
+        construct: function (root, id, url) {
             // fills the node
             const template = $('#player-riddle-template');
             if (!template.exists())
@@ -50,6 +50,9 @@ class PlayerRiddle {
             this.displayTimerTime();
         });
 
+        //url
+        this.hasURL = false;
+
         // constructs
         this.root = PlayerRiddleFactory.construct(root, id);
 
@@ -60,6 +63,7 @@ class PlayerRiddle {
                 validate: true,
                 cancel: true
             });
+            this.showURL(true);
             this.showTimer();
             this.setTimer(0);
             this.startTimerFromDate(Date.now());
@@ -84,16 +88,24 @@ class PlayerRiddle {
                                     cancel: false,
                                     validate: false
                                 });
+                                this.showURL(false);
                                 playerRiddleGrid.update();
+                                modal.modal('hide');
                             }
-                            // TODO Afficher status
-                            // if(data.status) {
-                            //     if(data.status.display)
-                            //         alert(data.status.message);
-                            // }
-                        } //TODO Error handling
+                            if (data.status.type === 'error') {
+                                if (data.status.display)
+                                    alert(data.status.message);
+                                else
+                                    alert('Code invalide');
+                            }
+                        },
+                        error: (data) => {
+                            if (data.status.display)
+                                alert(data.status.message);
+                            else
+                                alert('Une erreur est survenue');
+                        }
                     });
-                    modal.modal('hide');
                 }
             });
         });
@@ -105,6 +117,7 @@ class PlayerRiddle {
                 validate: false,
                 cancel: false
             });
+            this.showURL(false);
             this.timer.stop();
             this.showTimer(false);
             $.ajax('riddle/' + this.id + '/cancel'); //TODO Error handling
@@ -124,6 +137,8 @@ class PlayerRiddle {
             this.setSubtitle(options.subtitle);
         if (options.title)
             this.setTitle(options.title);
+        if (options.url)
+            this.setURL(options.url);
     }
 
     setTitle(str) {
@@ -147,6 +162,11 @@ class PlayerRiddle {
         this.root.find('.timer').text(formatMS(ms));
     }
 
+    setURL(str) {
+        this.root.find('.player-riddle-url').attr('href', str);
+        this.hasURL = true;
+    }
+
     showButton(option, show = true) {
         if (show) {
             this.root.find('.' + option + '-button').show();
@@ -159,6 +179,14 @@ class PlayerRiddle {
         Object.keys(options).forEach((key) => {
             options[key] ? this.root.find('.' + key + '-button').show() : this.root.find('.' + key + '-button').hide();
         })
+    }
+
+    showURL(show = true) {
+        if (this.hasURL && show) {
+            this.root.find('.player-riddle-url').show();
+        } else {
+            this.root.find('.player-riddle-url').hide();
+        }
     }
 
     showTimer(show = true) {
@@ -249,6 +277,7 @@ class PlayerRiddleGrid {
                 } else {
                     playerRiddle.startTimerFromDate(riddle.start_date);
                     playerRiddle.showButtons({start: false, validate: true, cancel: true});
+                    playerRiddle.showURL();
                 }
             }
         });
