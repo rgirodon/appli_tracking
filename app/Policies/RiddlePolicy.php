@@ -13,14 +13,16 @@ class RiddlePolicy
     public function validateRiddle(Team $team, Riddle $riddle){
         return !is_null($team) && !$team->isGM
             && !is_null($riddle->teams->where('id', $team->id)->first())
-            && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date);
+            && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date)
+            && is_null($riddle->teams->where('id', $team->id)->first()->pivot->end_date);
     }
 
     public function cancelRiddle(Team $team, Riddle $riddle)
     {
         return !is_null($team) && !$team->isGM
             && !is_null($riddle->teams->where('id', $team->id)->first())
-            && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date);
+            && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date)
+            && is_null($riddle->teams->where('id', $team->id)->first()->pivot->end_date);
     }
 
     public function startRiddle(Team $team, Riddle $riddle)

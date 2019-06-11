@@ -75,6 +75,7 @@ class PlayerRiddle {
             const modal = $('#validation-modal');
             modal.find('.modal-title').text('Validez ' + root.find('.card-title').text() + '\u00A0:');
             const form = modal.find('form');
+            form.off('submit');
             form.on('submit', (e) => {
                 e.preventDefault();
                 if (form.find('#validation-modal-code').val()) {
