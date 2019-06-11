@@ -11,8 +11,10 @@ class RoomList {
     addRoom(id, name) {
         if (this.rooms.indexOf(id) === -1) {
             const pos = this.tablist.addTab({title: name});
-            console.log(pos + 1);
-            createRoom(this.tablist.contentOfTab(pos + 1), id);
+            const api = createRoom(this.tablist.contentOfTab(pos + 1), id);
+            api.callback = () => {
+                this.tablist.notify(pos+1);
+            };
             this.rooms.push(id);
         }
     }

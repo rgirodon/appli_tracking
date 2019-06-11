@@ -34,15 +34,43 @@
         </div>
     </template>
 
+    {{-- Template pour les messages --}}
+    <template id="message-template">
+        <div class="message">
+            <div>
+            <span class="msg-head">
+                <span class="name">Name</span>
+                à
+                <span class="date">Date</span>
+            </span>
+            </div>
+            <div>
+                <div class="content">Content</div>
+            </div>
+        </div>
+    </template>
+
+    {{-- Template pour les salons --}}
+    <template id="room-template">
+        <div class="message-container">
+
+        </div>
+
+        <form action="msg/send/{id}" method="post" class="message-form">
+            <input type="text" name="content">
+        </form>
+    </template>
+
     {{--Création des onglets--}}
     <script>
         tablist.addTab({title: 'Suivi des équipes', active: true});
+        roomlist.update();
     </script>
 
-    <div id="gm-riddle-list"></div>
-
     <script>
-        const gmTeamList = new GMTeamList('#gm-riddle-list');
+        const div = $('<div>');
+        div.appendTo(tablist.contentOfTab(1));
+        const gmTeamList = new GMTeamList(div);
         gmTeamList.update();
     </script>
 @endsection
