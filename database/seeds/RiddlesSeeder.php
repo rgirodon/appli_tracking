@@ -116,7 +116,7 @@ class RiddlesSeeder extends Seeder
 
         // énigme finale à l'incubateur
         DB::table('riddles')->insert([
-            'name' => 'La Cour des Sciences',
+            'name' => 'Incumbateur',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
             'code' => 0,
