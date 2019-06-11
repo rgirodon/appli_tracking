@@ -107,7 +107,7 @@ class RiddlesSeeder extends Seeder
 
         // fusion de l'embranchement 2 : téléphone
         DB::table('riddles')->insert([
-            'name' => 'Le Téléphone de Téo',
+            'name' => 'Le Téléphone de Théo',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/telephone',
             'code' => 0,
