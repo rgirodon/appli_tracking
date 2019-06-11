@@ -17,11 +17,11 @@
                     <label class="btn btn-outline-primary">
                         <input type="radio" name="color" value="Bleue">Bleu
                     </label>
-                    <label class="btn btn-outline-secondary">
-                        <input type="radio" name="color" value="Grise">Gris
+                    <label class="btn btn-outline-warning">
+                        <input type="radio" name="color" value="Jaune">Jaune
                     </label>
                     <label class="btn btn-outline-dark">
-                        <input type="radio" name="color" value="Noire">Noir
+                        <input type="radio" name="color" value="Violet">Violet
                     </label>
                 </div>
             </div>
