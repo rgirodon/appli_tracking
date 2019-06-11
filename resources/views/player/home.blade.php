@@ -34,7 +34,7 @@
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text"></p>
-                <a class="btn btn-info player-riddle-url my-1" style="display: none;">Lien vers l'énigme</a>
+                <a class="btn btn-info player-riddle-url my-1" target="_blank" style="display: none;">Lien vers l'énigme</a>
 
                 <div class="row mx-auto">
                     <button class="btn btn-primary start-button my-1">Commencer l'énigme</button>

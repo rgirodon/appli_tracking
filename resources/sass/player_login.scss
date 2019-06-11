@@ -20,4 +20,56 @@
       padding-right: 0.2rem !important;
     }
   }
+
+  .btn-rouge{
+    border: 1px solid $red;
+    color: $red;
+
+    &:hover, &.active{
+      background-color: $red;
+      color: white;
+    }
+  }
+
+  .btn-vert{
+    border: 1px solid $green;
+    color: $green;
+
+    &:hover, &.active{
+      background-color: $green;
+      color: white;
+    }
+  }
+
+  .btn-bleu{
+    border: 1px solid $blue;
+    color: $blue;
+
+    &:hover, &.active{
+      background-color: $blue;
+      color: white;
+    }
+  }
+
+  $jaune: #ffed4a;
+  .btn-jaune{
+    border: 1px solid $jaune;
+    color: $jaune;
+
+    &:hover, &.active{
+      background-color: $jaune;
+      color: white;
+    }
+  }
+
+  $violet: rgba(191, 63, 190, 0.87);
+  .btn-violet{
+    border: 1px solid $violet;
+    color: $violet;
+
+    &:hover, &.active{
+      background-color: $violet;
+      color: white;
+    }
+  }
 }
