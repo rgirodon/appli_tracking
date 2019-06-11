@@ -27,7 +27,7 @@ class MessageAPI {
                 console.error(jqXHR);
             },
             success: (data, textStatus, jqXHR) => {
-                this.container.innerHTML = '';
+                //this.container.innerHTML = '';
                 for (const message of data.messages) {
                     if(new Date(message.date) > this.last) {
                         this.last = new Date(message.date);
