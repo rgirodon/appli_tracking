@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
 class RiddlesSeeder extends Seeder
 {
@@ -33,6 +33,7 @@ class RiddlesSeeder extends Seeder
             'line' => 2
         ]);
 
+
         // premier embranchement : ballade dans TSE
         DB::table('riddles')->insert([
             'name' => 'La Salle Newsplex',
@@ -41,15 +42,31 @@ class RiddlesSeeder extends Seeder
             'code' => 0,
             'line' => 3
         ]);
+
         DB::table('riddles')->insert([
-            'name' => 'Les Objets de Téo',
+            'name' => 'Bureau des Associations',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
             'code' => 0,
             'line' => 3
         ]);
         DB::table('riddles')->insert([
-            'name' => 'Les Voyages de Téo',
+            'name' => 'Les Objets de Théo',
+            'description' => $faker->sentence(random_int(2, 7)),
+            'url' => null,
+            'code' => 0,
+            'line' => 3
+        ]);
+        DB::table('riddles')->insert([
+            'name' => 'Les Voyages de Théo',
+            'description' => $faker->sentence(random_int(2, 7)),
+            'url' => null,
+            'code' => 0,
+            'line' => 3
+        ]);
+
+        DB::table('riddles')->insert([
+            'name' => 'Bibliothèque',
             'description' => $faker->sentence(random_int(2, 7)),
             'url' => null,
             'code' => 0,
@@ -105,5 +122,7 @@ class RiddlesSeeder extends Seeder
             'code' => 0,
             'line' => 7
         ]);
+
+
     }
 }
