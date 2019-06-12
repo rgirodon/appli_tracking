@@ -42,3 +42,7 @@ Route::get('riddleteam/list', 'RiddleTeamController@listRiddlesTeams');
 
 // Player
 Route::get('player/', 'PlayerController@home');
+
+//  Admin
+Route:
+post('admin/modification', 'AdminController@modifRiddles');
