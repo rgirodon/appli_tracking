@@ -15,112 +15,103 @@ class RiddlesSeeder extends Seeder
         DB::table('riddles')->truncate();
         $faker = Faker::create();
 
-        // amphi : ligne seule
-        DB::table('riddles')->insert([
-            'name' => 'L\'Amphithéâtre',
-            'description' => $faker->sentence(random_int(2, 7)),
-            'url' => 'http://51.75.126.46/Amphi/public/index.php/accueilAmphi',
-            'code' => 0,
-            'line' => 1
-        ]);
-
         // mootse : ligne seule
         DB::table('riddles')->insert([
-            'name' => 'Mootse',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'Amphithéatre',
+            'description' => 'Connectez-vous à l\'intranet.',
             'url' => 'http://51.75.126.46/html/escapegameTSE/Mooste/index.html',
             'code' => 0,
-            'line' => 2
+            'line' => 1
         ]);
 
 
         // premier embranchement : ballade dans TSE
         DB::table('riddles')->insert([
-            'name' => 'La Salle Newsplex',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'CM Images et numérique en Newsplex',
+            'description' => 'Trouver les lettres cachées',
             'url' => null,
             'code' => 0,
-            'line' => 3
+            'line' => 2
         ]);
 
         DB::table('riddles')->insert([
             'name' => 'Bureau des Associations',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Trouver les lettres cachées',
             'url' => null,
             'code' => 0,
-            'line' => 3
+            'line' => 2
         ]);
         DB::table('riddles')->insert([
-            'name' => 'Les Objets de Théo',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'TD synthèse d\'image en A119 (Bâtiment A)',
+            'description' => 'Trouver les lettres cachées',
             'url' => null,
             'code' => 0,
-            'line' => 3
+            'line' => 2
         ]);
         DB::table('riddles')->insert([
-            'name' => 'Les Voyages de Théo',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'Rendez-vous à l\'administration',
+            'description' => 'Trouver les lettres cachées',
             'url' => null,
             'code' => 0,
-            'line' => 3
+            'line' => 2
         ]);
 
         DB::table('riddles')->insert([
-            'name' => 'Bibliothèque',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'Révisions à la bibliothèque',
+            'description' => 'Trouver les lettres cachées',
             'url' => null,
             'code' => 0,
-            'line' => 3
+            'line' => 2
         ]);
 
         // fusion de l'embranchement : cours des matières
         DB::table('riddles')->insert([
             'name' => 'La Cour des Matières',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Trouver le code.',
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/CDM',
             'code' => 0,
-            'line' => 4
+            'line' => 3
         ]);
 
         // embranchement 2 : la cité du design
         DB::table('riddles')->insert([
             'name' => 'La Tour', // + arcade (détecteur de distance)
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Trouver une partie du numéro de Théo.',
             'url' => null,
             'code' => 0,
-            'line' => 5
+            'line' => 4
         ]);
         DB::table('riddles')->insert([
             'name' => 'Le Mixeur', // carré magique
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Trouver une partie du numéro de Théo.',
             'url' => 'http://51.75.126.46/html/escapegameTSE/CarreMagique/',
             'code' => 0,
-            'line' => 5
+            'line' => 4
         ]);
         DB::table('riddles')->insert([
             'name' => 'La Fabrique de l\'Innovation', // code source
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Trouver une partie du numéro de Théo.',
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/codesource',
             'code' => 0,
-            'line' => 5
+            'line' => 4
         ]);
 
         // fusion de l'embranchement 2 : téléphone
         DB::table('riddles')->insert([
             'name' => 'Le Téléphone de Théo',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'description' => 'Appelez Théo.',
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/telephone',
             'code' => 0,
-            'line' => 6
+            'line' => 5
         ]);
 
         // énigme finale à l'incubateur
         DB::table('riddles')->insert([
-            'name' => 'Incumbateur',
-            'description' => $faker->sentence(random_int(2, 7)),
+            'name' => 'Incubateur',
+            'description' => 'Trouver Théo!',
             'url' => null,
             'code' => 0,
-            'line' => 7
+            'line' => 6
         ]);
 
 
