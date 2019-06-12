@@ -51,10 +51,11 @@
     }
   }
 
-  $jaune: #ffed4a;
+  $jaune: #e6e200;
+  $jaune_foncé: #a4a000;
   .btn-jaune{
     border: 1px solid $jaune;
-    color: $jaune;
+    color: $jaune_foncé;
 
     &:hover, &.active{
       background-color: $jaune;

@@ -34,7 +34,7 @@ class GameMasterController extends Controller
 
     function home()
     {
-        if (Auth::check() and Auth::user()->isGM) {
+        if (Auth::check() and Auth::user()->grade === 1) {
             $gm = Auth::user();
             return view('gm.home', ['logout_url' => '/gm/logout'])->withTitle($gm->getAttribute('name'));
         } else if (Auth::check())

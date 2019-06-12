@@ -56,7 +56,7 @@ class TeamController extends Controller
         if (is_null($user)) {
             $user = new Team();
             $user->name = $name;
-            $user->isGM = false;
+            $user->grade = 0;
             $user->saveOrFail();
             $room = new Room();
             $room->name = 'Conversation ' . $name;
@@ -71,10 +71,18 @@ class TeamController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->isGM) {
-                return view('gm.home', ['logout_url' => 'gm/logout']);
-            } else {
-                return view('player.home', ['logout_url' => 'player/logout']);
+            switch ($user->grade){
+                case 0:
+                    return view('player.home', ['logout_url' => 'player/logout']);
+                    break;
+                case 1:
+                    return view('gm.home', ['logout_url' => 'gm/logout']);
+                    break;
+                case 2:
+                    return view('admin.home');
+                    break;
+                default:
+                    throw new UnauthorizedException();
             }
         } else
             return redirect('player/login');

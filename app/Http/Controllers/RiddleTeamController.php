@@ -15,7 +15,7 @@ class RiddleTeamController extends Controller
 
         $output = [];
         foreach (Team::all() as $team) {
-            if ($team->isGM) continue;
+            if ($team->grade > 1) continue;
             $riddles = [];
             foreach ($team->riddles->all() as $riddle) {
                 array_push($riddles, riddle_info_for_gm($riddle, $team));

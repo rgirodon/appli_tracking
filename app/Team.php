@@ -14,7 +14,7 @@ class Team extends Authenticatable
      * integer id
      * string name
      * string|null password
-     * boolean isGM
+     * integer grade
      * datetime|null start_date
      * datetime|null end_date
      */
@@ -35,7 +35,6 @@ class Team extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'isGM' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime'
     ];

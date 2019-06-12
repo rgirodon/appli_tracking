@@ -11,11 +11,11 @@ class PlayerPolicy
 
     public function isPlayer(Team $team)
     {
-        return !is_null($team) && !$team->isGM;
+        return !is_null($team) && $team->grade === 0;
     }
 
     public function isGM(Team $team)
     {
-        return !is_null($team) && $team->isGM;
+        return !is_null($team) && $team->grade === 1;
     }
 }

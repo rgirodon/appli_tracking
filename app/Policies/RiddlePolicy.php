@@ -11,7 +11,7 @@ class RiddlePolicy
     use HandlesAuthorization;
 
     public function validateRiddle(Team $team, Riddle $riddle){
-        return !is_null($team) && !$team->isGM
+        return !is_null($team) && $team->grade === 1
             && !is_null($riddle->teams->where('id', $team->id)->first())
             && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date)
             && is_null($riddle->teams->where('id', $team->id)->first()->pivot->end_date);
@@ -19,7 +19,7 @@ class RiddlePolicy
 
     public function cancelRiddle(Team $team, Riddle $riddle)
     {
-        return !is_null($team) && !$team->isGM
+        return !is_null($team) && $team->grade === 1
             && !is_null($riddle->teams->where('id', $team->id)->first())
             && !is_null($riddle->teams->where('id', $team->id)->first()->pivot->start_date)
             && is_null($riddle->teams->where('id', $team->id)->first()->pivot->end_date);
@@ -27,12 +27,12 @@ class RiddlePolicy
 
     public function startRiddle(Team $team, Riddle $riddle)
     {
-        return !is_null($team) && !$team->isGM;
+        return !is_null($team) && $team->grade === 1;
     }
 
     public function listRiddles(Team $team)
     {
-        return !is_null($team) && !$team->isGM;
+        return !is_null($team) && $team->grade === 1;
     }
 
 }

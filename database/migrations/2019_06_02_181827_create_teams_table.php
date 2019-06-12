@@ -17,7 +17,7 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('password')->nullable();
-            $table->boolean('isGM')->default(0);
+            $table->smallInteger('grade')->default(0);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
         });
