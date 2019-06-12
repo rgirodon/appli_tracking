@@ -6,6 +6,7 @@ use App\Room;
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\UnauthorizedException;
 
 
@@ -20,7 +21,7 @@ class TeamController extends Controller
     {
         $this->validate($request, [
             'color' => 'required',
-            'num' => 'required'
+            'num' => 'required|numeric'
         ]);
 
         $color = 0;
@@ -45,9 +46,6 @@ class TeamController extends Controller
         }
 
         $num = $request->input('num');
-        // todo : check input
-        // if ($num)
-        // throw new UnauthorizedException();
 
         $name = $color . ' ' . $num;
 
@@ -58,10 +56,19 @@ class TeamController extends Controller
             $user->name = $name;
             $user->grade = 0;
             $user->saveOrFail();
+
             $room = new Room();
             $room->name = 'Conversation ' . $name;
             $user->rooms()->save($room);
-            //toDO lier la room avec les GM.
+            $room_id = $room->id;
+
+            $gms = Team::where('grade', '=', 1)->get();
+            foreach ($gms as $gm){
+                DB::table('rooms_teams')->insert([
+                    'team_id' => $gm->id,
+                    'room_id' => $room_id
+                ]);
+            }
         }
         Auth::login($user);
         return redirect('/');
