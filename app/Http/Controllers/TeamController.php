@@ -79,7 +79,7 @@ class TeamController extends Controller
                     return view('gm.home', ['logout_url' => 'gm/logout']);
                     break;
                 case 2:
-                    return view('admin.home');
+                    return redirect('/admin');
                     break;
                 default:
                     throw new UnauthorizedException();

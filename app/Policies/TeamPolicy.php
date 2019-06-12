@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PlayerPolicy
+class TeamPolicy
 {
     use HandlesAuthorization;
 
@@ -17,5 +17,10 @@ class PlayerPolicy
     public function isGM(Team $team)
     {
         return !is_null($team) && $team->grade === 1;
+    }
+
+    public function isAdmin(Team $team)
+    {
+        return !is_null($team) && $team->grade === 2;
     }
 }

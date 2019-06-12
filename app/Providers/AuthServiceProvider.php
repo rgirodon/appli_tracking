@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\MessengerPolicy;
-use App\Policies\PlayerPolicy;
+use App\Policies\TeamPolicy;
 use App\Policies\RiddlePolicy;
 use App\Riddle;
 use App\Room;
@@ -20,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Room::class => MessengerPolicy::class,
         Riddle::class => RiddlePolicy::class,
-        Team::class => PlayerPolicy::class
+        Team::class => TeamPolicy::class
     ];
 
     /**
