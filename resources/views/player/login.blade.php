@@ -4,7 +4,7 @@
     <form class="player-login" method="post" action="{{ url('player/checklogin') }}">
         <div class="container mb-3" data-toggle="buttons">
             <div class="row">
-                <span class="text-left">Sélectionnez votre couleur d'équipe</span>
+                <span class="text-left">Sélectionnez votre couleur d'équipe :</span>
             </div>
             <div class="row">
                 <div class="btn-group btn-group-toggle w-100">
@@ -29,7 +29,7 @@
 
         <div class="container mb-3" data-toggle="buttons">
             <div class="row">
-                <span class="text-left">Sélectionnez votre numéro d'équipe</span>
+                <span class="text-left">Sélectionnez votre numéro d'équipe :</span>
             </div>
             <div class="row">
                 <div class="btn-group btn-group-toggle w-100">
@@ -47,6 +47,25 @@
                     </label>
                     <label class="btn btn-light border">
                         <input type="radio" name="num" value="5">5
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="btn-group btn-group-toggle w-100">
+                    <label class="btn btn-light border">
+                        <input type="radio" name="num" value="6">6
+                    </label>
+                    <label class="btn btn-light border">
+                        <input type="radio" name="num" value="7">7
+                    </label>
+                    <label class="btn btn-light border">
+                        <input type="radio" name="num" value="8">8
+                    </label>
+                    <label class="btn btn-light border">
+                        <input type="radio" name="num" value="9">9
+                    </label>
+                    <label class="btn btn-light border">
+                        <input type="radio" name="num" value="10">10
                     </label>
                 </div>
             </div>
