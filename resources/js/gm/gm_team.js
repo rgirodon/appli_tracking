@@ -1,3 +1,5 @@
+const {Timer} = require('easytimer.js');
+
 function formatMS(s) {
     function pad(n, z) {
         z = z || 2;
@@ -10,7 +12,7 @@ function formatMS(s) {
     s = (s - secs) / 60;
     const mins = s % 60;
     const hrs = (s - mins) / 60;
-    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
+    return (hrs > 0 ? pad(hrs) + ':' : '') + pad(mins) + ':' + pad(secs) /*+ '.' + pad(ms, 3)*/;
 }
 
 const GMTeamFactory = (function () {
@@ -80,6 +82,16 @@ class GMTeam {
 
         // constructs and retrieves ids
         this.ids = GMTeamFactory.construct(root, id);
+
+        this.riddleTimer = new Timer();
+        this.riddleTimer.addEventListener('secondsUpdated', () => {
+            this.root.find('.current-riddle-time').text(formatMS(this.riddleTimer.getTotalTimeValues().secondTenths * 100));
+        });
+
+        this.teamTimer = new Timer();
+        this.teamTimer.addEventListener('secondsUpdated', () => {
+            this.root.find('.team-time').text(formatMS(this.teamTimer.getTotalTimeValues().secondTenths * 100));
+        });
     }
 
     setAtributes(options) {
@@ -89,6 +101,50 @@ class GMTeam {
             this.setRiddleName(options.riddleName);
         if (options.progress)
             this.setProgress(options.progress);
+        if (options.start && options.end) {
+            if (this.teamTimer.isRunning()) {
+                this.teamTimer.stop();
+            }
+            this.root.find('.team-time').text(formatMS(new Date(options.end) - new Date(options.start)));
+        } else if (options.start) {
+            if (!this.teamTimer.isRunning()) {
+                const ms = Date.now() - new Date(options.start);
+                const sec = Math.floor(ms / 1000);
+                this.teamTimer.start({
+                    startValues: {
+                        seconds: sec
+                    }
+                });
+                this.root.find('.current-riddle-time').text(formatMS(this.teamTimer.getTotalTimeValues().secondTenths * 100));
+            }
+        } else {
+            if (this.teamTimer.isRunning()) {
+                this.teamTimer.stop();
+            }
+            this.root.find('.team-time').text(formatMS(0));
+        }
+        if (options.riddle_start && options.riddle_end) {
+            if (this.teamTimer.isRunning()) {
+                this.teamTimer.stop();
+            }
+            this.root.find('.current-riddle-time').text(formatMS(new Date(options.riddle_end) - new Date(options.riddle_start)));
+        } else if (options.riddle_start) {
+            if (this.riddleTimer.isRunning())
+                this.riddleTimer.stop();
+            const ms = Date.now() - new Date(options.riddle_start);
+            const sec = Math.floor(ms / 1000);
+            this.riddleTimer.start({
+                startValues: {
+                    seconds: sec
+                }
+            });
+            this.root.find('.current-riddle-time').text(formatMS(this.riddleTimer.getTotalTimeValues().secondTenths * 100));
+        } else {
+            if (this.riddleTimer.isRunning()) {
+                this.riddleTimer.stop();
+            }
+            this.root.find('.current-riddle-time').text(formatMS(0));
+        }
     }
 
     setTeamName(str) {
@@ -147,7 +203,11 @@ class GMTeamList {
             gmteam.setAtributes({
                 teamName: team.name,
                 riddleName: names[currentRiddle.id - 1],
-                progress: 100 * (currentRiddle.id / 11)
+                progress: 100 * (currentRiddle.id / 11),
+                start: team.start_date,
+                end: team.end_date,
+                riddle_start: currentRiddle.start_date,
+                riddle_end: currentRiddle.end_date
             });
             // détail
             const list = gmteam.root.find('.card-body ul');

@@ -1,14 +1,25 @@
 @extends('layouts.base')
 
+@section('nav-items')
+    {{-- Timer global --}}
+    <div id="global-timer" class="row justify-content-start">
+
+    </div>
+@endsection
+
 @section('content')
     {{--template pour une énigme gm--}}
     <template id="gm-team-template">
         <div class="container jumbotron gm-team">
             <div class="row align-items-start gm-teams mb-3">
-                <div class="col team-name align-self-center text-center"></div>
+                <div class="col align-self-center text-center">
+                    <span class="team-name"></span>&nbsp;:
+                    <span class="team-time"></span>
+                </div>
                 <div class="col-8 gm-riddle-col">
                     <div class="row justify-content-center"><span class="current-riddle-title">Énigme actuelle&nbsp;: </span></div>
-                    <div class="row justify-content-center"><span class="current-riddle"></span></div>
+                    <div class="row justify-content-center"><span class="current-riddle"></span>&nbsp;: <span
+                                class="current-riddle-time"></span></div>
                 </div>
             </div>
             <div class="row progress">
@@ -72,5 +83,6 @@
         div.appendTo(tablist.contentOfTab(1));
         const gmTeamList = new GMTeamList(div);
         gmTeamList.update();
+
     </script>
 @endsection
