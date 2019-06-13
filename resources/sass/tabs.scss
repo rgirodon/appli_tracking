@@ -22,7 +22,9 @@
 
 #tablist > ul {
   position: sticky;
-  top: 55px;
+  top: 60px;
   background-color: white;
-  z-index: 1030;
+  z-index: 99;
+  padding-top: 10px;
+  transform: translateY(-10px);
 }
