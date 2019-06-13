@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white">
     <div class="container">
-        <div class="row justify-content-end w-100">
+        @yield('nav-items')
+        <div class="row justify-content-end">
             <div class="" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     @if(isset(Auth::user()->name))

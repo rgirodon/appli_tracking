@@ -32,7 +32,11 @@ class RiddleController extends Controller
                 'message' => 'Énigmes récupérées avec succès',
                 'display' => false
             ],
-            'riddles' => $riddles
+            'riddles' => $riddles,
+            'time' => [
+                'start_date' => $user->start_date,
+                'end_date' => $user->end_date
+            ]
         ]);
     }
 

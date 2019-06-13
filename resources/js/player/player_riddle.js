@@ -68,6 +68,7 @@ class PlayerRiddle {
             this.setTimer(0);
             this.startTimerFromDate(Date.now());
             $.ajax('riddle/' + this.id + '/start'); //TODO Error handling
+            playerRiddleGrid.start();
         });
 
         //  validate button modifies the modal when clicking
@@ -232,6 +233,12 @@ class PlayerRiddleGrid {
 
         this.playerRiddles = [];
         this.rowNumber = 0;
+
+        this.globalTimer = new Timer();
+        this.globalTimer.addEventListener('secondsUpdated', () => {
+            this.displayGlobalTimerTime();
+        });
+        this.started = false;
     }
 
     addRow() {
@@ -252,6 +259,7 @@ class PlayerRiddleGrid {
 
     updateRiddles(riddleJSON) {
         const riddles = riddleJSON.riddles;
+        this.updateTimer(riddleJSON.time);
         riddles.forEach((riddle) => {
             let playerRiddle = this.playerRiddles.find((e) => {
                 return e.id === riddle.id;
@@ -283,6 +291,48 @@ class PlayerRiddleGrid {
             }
         });
     };
+
+    updateTimer(time) {
+        if (time.start_date && time.end_date) {
+            this.started = true;
+            $('#global-timer .time').text(formatMS(new Date(time.end_date) - new Date(time.start_date)));
+            if (this.globalTimer.isRunning()) {
+                this.globalTimer.stop();
+            }
+        } else if (time.start_date) {
+            this.started = true;
+            if (!this.globalTimer.isRunning()) {
+                const ms = Date.now() - new Date(time.start_date);
+                const sec = Math.floor(ms / 1000);
+                this.globalTimer.start({
+                    startValues: {
+                        seconds: sec
+                    }
+                });
+                this.displayGlobalTimerTime();
+            }
+        } else {
+            $('#global-timer .time').text('00:00');
+            if (this.globalTimer.isRunning()) {
+                this.globalTimer.stop();
+            }
+        }
+    }
+
+    start() {
+        if (!this.started) {
+            this.started = true;
+            this.updateTimer({start_date: Date.now()});
+        }
+    }
+
+    displayGlobalTimerTime() {
+        const val = this.globalTimer.getTimeValues();
+        const fields = val.hours > 0 ? ['hours'] : [];
+        fields.push('minutes');
+        fields.push('seconds');
+        $('#global-timer .time').text(val.toString(fields));
+    }
 
     update() {
         $.ajax('riddle/list', {method: 'GET', success: (response) => this.updateRiddles(response)});

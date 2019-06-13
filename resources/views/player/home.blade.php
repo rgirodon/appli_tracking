@@ -1,5 +1,13 @@
 @extends('layouts.base')
 
+@section('nav-items')
+    {{-- Timer global --}}
+    <div id="global-timer" class="row justify-content-start">
+        Temps Écoulé&nbsp;:
+        <span class="time"></span>
+    </div>
+@endsection
+
 @section('content')
     {{--modale de validation des énigmes--}}
     <div class="modal fade" id="validation-modal">
@@ -86,6 +94,7 @@
 
     {{--Création des énigmes au chargement de la page--}}
     <script>
+        tablist.contentOfTab(1).append($('<div>', {id: 'global-timer'}));
         tablist.contentOfTab(1).append($('<div>', {id: 'mySuperRiddleGrid'}));
                 {{--div de base de la grille d'énigmes--}}
         const playerRiddleGrid = new PlayerRiddleGrid('#mySuperRiddleGrid');

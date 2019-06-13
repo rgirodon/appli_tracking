@@ -33,6 +33,10 @@ if (!function_exists('start_riddle')) {
         } else {
             throw new Exception("Riddle already started");
         }
+        if (is_null($team->start_date)) {
+            $team->start_date = now();
+            $team->saveOrFail();
+        }
     }
 }
 
@@ -57,6 +61,12 @@ if (!function_exists('end_riddle')) {
         if (!is_null($riddle_team->pivot->end_start))
             throw new Exception("Riddle already finished");
         $riddle->teams()->updateExistingPivot($team->id, ['end_date' => now()]);
+        if (all(Riddle::all(), function ($r) use ($team) {
+            return $r->isDisabled || is_riddle_completed($r, $team);
+        })) {
+            $team->end_date = now();
+            $team->saveOrFail();
+        }
     }
 }
 
