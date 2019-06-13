@@ -73,7 +73,7 @@ class PlayerRiddle {
         //  validate button modifies the modal when clicking
         this.root.find('.validate-button').click(() => {
             const modal = $('#validation-modal');
-            modal.find('.modal-title').text('Validez ' + root.find('.card-title').text() + '\u00A0:');
+            modal.find('.modal-title').text('Validez ' + this.root.find('.card-title').text() + '\u00A0:');
             const form = modal.find('form');
             form.off('submit');
             form.on('submit', (e) => {
