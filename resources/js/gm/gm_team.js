@@ -197,13 +197,16 @@ class GMTeamList {
         data.forEach((data) => {
             const team = data.team;
             const riddles = data.riddles;
+
+            const prog = riddles.map(r => (r.start_date ? 1 : 0) + (r.end_date ? 1 : 0)).reduce((a, b) => a + b);
+
             const gmteam = this.addGMTeam('gm-team-' + team.id);
             // todo à améliorer en prenant en compte les temps (pour l'instant on prend la dernière)
             const currentRiddle = riddles.pop();
             gmteam.setAtributes({
                 teamName: team.name,
                 riddleName: names[currentRiddle.id - 1],
-                progress: 100 * (currentRiddle.id / 11),
+                progress: 100 * prog / (teamJSON.riddle_number * 2),
                 start: team.start_date,
                 end: team.end_date,
                 riddle_start: currentRiddle.start_date,

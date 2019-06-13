@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Riddle;
 use App\Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,7 +42,8 @@ class RiddleTeamController extends Controller
                 'display' => false
             ],
             'data' => $output,
-            'riddle_names' => DB::table('riddles')->pluck('name')
+            'riddle_names' => DB::table('riddles')->pluck('name'),
+            'riddle_number' => Riddle::where('disabled', 0)->count()
         ]);
     }
 }
