@@ -18,7 +18,7 @@
 </header>
 
 
-<h2>Réinitialiser la base de données ? (dangeureux)</h2>
+<h2>Réinitialiser la base de données ? (cette action est irréversible)</h2>
 <form id="refreshDB" action="{{ url('/admin/refreshDB') }}" method="post">
     <button id="refreshButton" onclick="confirm(e)">Je veux réinitialiser la base de données</button>
 </form>
