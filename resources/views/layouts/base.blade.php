@@ -15,7 +15,9 @@
     <h1 class="my-auto"><a href="{{ url('/') }}">{{config('app.name')}}</a></h1>
 </header>
 
-@include('layouts.logout')
+    <div class="sticky-top">
+        @include('layouts.logout')
+    </div>
 
 <div id="tablist"></div>
 <script>

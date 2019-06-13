@@ -20,3 +20,9 @@
   }
 }
 
+#tablist > ul {
+  position: sticky;
+  top: 55px;
+  background-color: white;
+  z-index: 1030;
+}

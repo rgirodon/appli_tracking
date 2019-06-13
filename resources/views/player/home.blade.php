@@ -11,7 +11,7 @@
 @section('content')
     {{--modale de validation des énigmes--}}
     <div class="modal fade" id="validation-modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"></h4>
