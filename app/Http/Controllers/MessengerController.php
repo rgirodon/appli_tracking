@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: thomas
- * Date: 03/06/19
- * Time: 14:17
- */
 
 namespace App\Http\Controllers;
 
@@ -33,7 +27,6 @@ class MessengerController extends Controller
         ]);
     }
 
-
     public function GetMessages($room_id, Request $request)
     {
         $room = Room::findOrFail($room_id);
@@ -60,7 +53,6 @@ class MessengerController extends Controller
             'messages' => $messages
         ]);
     }
-
 
     public function listRooms()
     {

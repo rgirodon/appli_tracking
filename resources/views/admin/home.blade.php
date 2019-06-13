@@ -53,22 +53,22 @@
         <input type="number" name="id" value="{{$riddle['id']}}" hidden>
         <div>
             <div>Ancien nom : {{$riddle['name']}}</div>
-            <label for="name">Nouveau nom : </label>
-            <input type="text" id="name" name="name">
+            <label for="name{{$loop->index}}">Nouveau nom : </label>
+            <input type="text" id="name{{$loop->index}}" name="name">
         </div>
         <div>
             <div>Ancienne description : {{$riddle['description']}}</div>
-            <label for="description">Nouvelle description : </label>
-            <input type="text" id="description" name="description">
+            <label for="description{{$loop->index}}">Nouvelle description : </label>
+            <input type="text" id="description{{$loop->index}}" name="description">
         </div>
         <div>
             <div>Ancien code : {{$riddle['code']}}</div>
-            <label for="code">Nouveau code : </label>
-            <input type="text" id="code" name="code">
+            <label for="code{{$loop->index}}">Nouveau code : </label>
+            <input type="text" id="code{{$loop->index}}" name="code">
         </div>
         <div>
-            <label for="disable">Désactiver ?</label>
-            <input type="checkbox" id="disable" name="disabled" {{$riddle['disabled'] ? 'checked' : ''}}>
+            <label for="disable{{$loop->index}}">Désactiver ?</label>
+            <input type="checkbox" id="disable{{$loop->index}}" name="disabled" {{$riddle['disabled'] ? 'checked' : ''}}>
         </div>
         <button type="submit">Envoyer</button>
     </form>
