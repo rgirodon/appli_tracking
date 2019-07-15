@@ -29,8 +29,9 @@ class MessageAPI {
             success: (data, textStatus, jqXHR) => {
                 //this.container.innerHTML = '';
                 for (const message of data.messages) {
-                    if(new Date(message.date) > this.last) {
-                        this.last = new Date(message.date);
+
+                    if(new Date(message.date.date) > this.last) {
+                        this.last = new Date(message.date.date);
                         if(this.callback)
                             this.callback();
                         const element = this.template.createMessage(message);

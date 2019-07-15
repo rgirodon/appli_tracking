@@ -20,7 +20,7 @@ class RoomList {
     }
 
     update() {
-        $.ajax('/msg/list', {
+        $.ajax('msg/list', {
             success: (data) => {
                 data.rooms.forEach(room => {
                     this.addRoom(room.id, room.name);

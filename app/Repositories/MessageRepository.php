@@ -19,7 +19,7 @@ class MessageRepository
     {
         $msg = new Message();
         $msg->content = $content;
-        $msg->date = now();
+        $msg->date = now('Europe/Paris');
         $msg->team_id = $team->id;
         $msg->room_id = $room->id;
 

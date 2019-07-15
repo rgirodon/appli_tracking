@@ -36,7 +36,7 @@ class GameMasterController extends Controller
     {
         if (Auth::check() and Auth::user()->grade === 1) {
             $gm = Auth::user();
-            return view('gm.home', ['logout_url' => '/gm/logout'])->withTitle($gm->getAttribute('name'));
+            return view('gm.home', ['logout_url' => 'gm/logout'])->withTitle($gm->getAttribute('name'));
         } else if (Auth::check())
             return redirect('/');
         else

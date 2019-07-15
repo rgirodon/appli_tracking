@@ -17,8 +17,9 @@ class RiddleController extends Controller
         $user = Auth::user();
 
         $riddles = [];
-
+                
         foreach (Riddle::all() as $riddle) {
+            
             if (!$riddle->disabled && all($riddle->parents, function ($r) use ($user) {
                     return $r->disabled || is_riddle_completed($r, $user);
                 })) {
