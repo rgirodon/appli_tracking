@@ -17,10 +17,7 @@ if (!function_exists('is_riddle_completed')) {
 
 if (!function_exists('is_riddle_in_parcours')) {
     function is_riddle_in_parcours(Riddle $riddle, Team $team)
-    {
-        
-        Log::info($team->name.' <> '.$riddle->name);
-        
+    {        
         $parcours = Parcours::where('team_id', $team->id)
                                 ->where('riddle_id', $riddle->id)
                                 ->first();
@@ -95,6 +92,7 @@ if (!function_exists('riddle_info')) {
             'id' => $riddle->id,
             'name' => $riddle->name,
             'description' => $riddle->description,
+            'post_resolution_message' => $riddle->post_resolution_message,
             'url' => $riddle->url,
             'start_date' => is_null($riddle_team) || is_null($riddle_team->pivot->start_date) ? null : new Carbon($riddle_team->pivot->start_date),
             'end_date' => is_null($riddle_team) || is_null($riddle_team->pivot->end_date) ? null : new Carbon($riddle_team->pivot->end_date),

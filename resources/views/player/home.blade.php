@@ -42,6 +42,7 @@
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text"></p>
+                <p class="card-post-resolution-message" style="display: none;"></p>
                 <a class="btn btn-info player-riddle-url my-1" target="_blank" style="display: none;">Lien vers l'énigme</a>
 
                 <div class="row mx-auto">

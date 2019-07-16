@@ -129,6 +129,8 @@ class PlayerRiddle {
     setAttributes(options) {
         if (options.description)
             this.setDescription(options.description);
+        if (options.post_resolution_message)
+            this.setPostResolutionMessage(options.post_resolution_message);
         if (options.id)
             this.setID(options.id);
         if (options.showButtons)
@@ -153,6 +155,14 @@ class PlayerRiddle {
 
     setDescription(str) {
         this.root.find('.card-text').text(str);
+    }
+    
+    setPostResolutionMessage(str) {
+        this.root.find('.card-post-resolution-message').text(str);        
+    }
+    
+    showPostResolutionMessage() {
+    	this.root.find('.card-post-resolution-message').show();
     }
 
     setID(id) {
@@ -273,6 +283,7 @@ class PlayerRiddleGrid {
                 id: riddle.id,
                 title: riddle.name,
                 description: riddle.description,
+                post_resolution_message: riddle.post_resolution_message,
                 url: riddle.url
             });
             if (riddle.start_date) {
@@ -283,6 +294,10 @@ class PlayerRiddleGrid {
                         start: false
                     });
                     playerRiddle.setTimer(end - start);
+                    
+                    if (riddle.post_resolution_message) {
+                    	playerRiddle.showPostResolutionMessage();
+                    }
                 } else {
                     playerRiddle.startTimerFromDate(riddle.start_date);
                     playerRiddle.showButtons({start: false, validate: true, cancel: true});

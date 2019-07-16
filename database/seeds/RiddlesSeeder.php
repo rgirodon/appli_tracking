@@ -20,6 +20,7 @@ class RiddlesSeeder extends Seeder
             'id' => 1,
             'name' => 'L\'Amphithéâtre',
             'description' => 'Connectez-vous à l\'intranet.',
+            'post_resolution_message' => 'Bravo !!!',
             'url' => 'http://51.75.126.46/html/escapegameTSE/Mooste/index.html',
             'code' => 0,
             'line' => 1
