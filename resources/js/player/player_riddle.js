@@ -170,7 +170,7 @@ class PlayerRiddle {
         this.root.find('.player-riddle-card').last().attr('id', id);
     }
 
-    setTimer(ms) {
+    setTimer(ms) {    	
         this.root.find('.timer').text(formatMS(ms));
     }
 
@@ -288,8 +288,10 @@ class PlayerRiddleGrid {
             });
             if (riddle.start_date) {
                 if (riddle.end_date) {
-                    const start = new Date(riddle.start_date);
-                    const end = new Date(riddle.end_date);
+                    const start = new Date(riddle.start_date.date);
+                    
+                    const end = new Date(riddle.end_date.date);
+                    
                     playerRiddle.showButtons({
                         start: false
                     });
@@ -299,7 +301,7 @@ class PlayerRiddleGrid {
                     	playerRiddle.showPostResolutionMessage();
                     }
                 } else {
-                    playerRiddle.startTimerFromDate(riddle.start_date);
+                    playerRiddle.startTimerFromDate(riddle.start_date.date);
                     playerRiddle.showButtons({start: false, validate: true, cancel: true});
                     playerRiddle.showURL();
                 }
@@ -308,16 +310,16 @@ class PlayerRiddleGrid {
     };
 
     updateTimer(time) {
-        if (time.start_date && time.end_date) {
+        if (time.start_date && time.start_date.date && time.end_date && time.end_date.date) {
             this.started = true;
-            $('#global-timer .time').text(formatMS(new Date(time.end_date) - new Date(time.start_date)));
+            $('#global-timer .time').text(formatMS(new Date(time.end_date.date) - new Date(time.start_date.date)));
             if (this.globalTimer.isRunning()) {
                 this.globalTimer.stop();
             }
-        } else if (time.start_date) {
+        } else if (time.start_date && time.start_date.date) {
             this.started = true;
             if (!this.globalTimer.isRunning()) {
-                const ms = Date.now() - new Date(time.start_date);
+                const ms = Date.now() - new Date(time.start_date.date);
                 const sec = Math.floor(ms / 1000);
                 this.globalTimer.start({
                     startValues: {
@@ -337,7 +339,11 @@ class PlayerRiddleGrid {
     start() {
         if (!this.started) {
             this.started = true;
-            this.updateTimer({start_date: Date.now()});
+            this.updateTimer({
+            	start_date: {
+            		date: Date.now()
+            	}
+            });
         }
     }
 

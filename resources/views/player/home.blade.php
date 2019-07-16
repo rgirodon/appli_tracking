@@ -100,6 +100,5 @@
                 {{--div de base de la grille d'énigmes--}}
         const playerRiddleGrid = new PlayerRiddleGrid('#mySuperRiddleGrid');
         const res = playerRiddleGrid.update();
-        console.log(res);
     </script>
 @endsection

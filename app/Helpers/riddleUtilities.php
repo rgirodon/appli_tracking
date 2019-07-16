@@ -40,14 +40,14 @@ if (!function_exists('start_riddle')) {
     {
         $riddle_team = $riddle->teams->where('id', $team->id)->first();
         if (is_null($riddle_team)) {
-            $riddle->teams()->attach($team, ['start_date' => now()]);
+            $riddle->teams()->attach($team, ['start_date' => now('Europe/Paris')]);
         } else if (is_null($riddle_team->pivot->start_date)) {
-            $riddle->teams()->updateExistingPivot($team->id, ['start_date' => now()]);
+            $riddle->teams()->updateExistingPivot($team->id, ['start_date' => now('Europe/Paris')]);
         } else {
             throw new Exception("Riddle already started");
         }
         if (is_null($team->start_date)) {
-            $team->start_date = now();
+            $team->start_date = now('Europe/Paris');
             $team->saveOrFail();
         }
     }
@@ -73,11 +73,12 @@ if (!function_exists('end_riddle')) {
             throw new Exception("Riddle not started");
         if (!is_null($riddle_team->pivot->end_start))
             throw new Exception("Riddle already finished");
-        $riddle->teams()->updateExistingPivot($team->id, ['end_date' => now()]);
+            $riddle->teams()->updateExistingPivot($team->id, ['end_date' => now('Europe/Paris')]);
+            
         if (all(Riddle::all(), function ($r) use ($team) {
-            return $r->isDisabled || is_riddle_completed($r, $team);
+            return $r->isDisabled || !is_riddle_in_parcours($r, $team) || is_riddle_completed($r, $team);
         })) {
-            $team->end_date = now();
+            $team->end_date = now('Europe/Paris');
             $team->saveOrFail();
         }
     }

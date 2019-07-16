@@ -16,7 +16,7 @@ class MessageTemplate {
     }
 
     createMessage(message) {
-        const date = new Date(message.date);
+        const date = new Date(message.date.date);        
         const element = document.importNode(this.template.content, true);
         element.querySelector(this.nameSelector).textContent = message.author;
         element.querySelector(this.dateSelector).textContent = MessageTemplate.renderTime(date);
@@ -26,7 +26,7 @@ class MessageTemplate {
         return element;
     }
 
-    static renderTime(date) {
+    static renderTime(date) {    	
         let min = date.getHours() * 60 + date.getMinutes();
         const hour = Math.floor(min / 60);
         min %= 60;
