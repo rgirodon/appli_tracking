@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             RoomsSeeder::class,
             RoomTeamSeeder::class,
             RiddlesRiddlesSeeder::class,
-            RiddleTeamSeeder::class
+            RiddleTeamSeeder::class,
+            ParcoursSeeder::class
         ]);
         /*Eloquent::unguard();
         $this->call(UsersTablesSeeder::class);*/

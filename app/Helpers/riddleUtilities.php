@@ -4,12 +4,28 @@
 use App\Riddle;
 use App\Team;
 use Illuminate\Support\Carbon;
+use App\Parcours;
+use Illuminate\Support\Facades\Log;
 
 if (!function_exists('is_riddle_completed')) {
     function is_riddle_completed(Riddle $riddle, Team $team)
     {
         $riddle_team = $riddle->teams->where('id', $team->id)->first();
         return !is_null($riddle_team) and !is_null($riddle_team->pivot->end_date);
+    }
+}
+
+if (!function_exists('is_riddle_in_parcours')) {
+    function is_riddle_in_parcours(Riddle $riddle, Team $team)
+    {
+        
+        Log::info($team->name.' <> '.$riddle->name);
+        
+        $parcours = Parcours::where('team_id', $team->id)
+                                ->where('riddle_id', $riddle->id)
+                                ->first();
+        
+        return !is_null($parcours);
     }
 }
 
