@@ -15,12 +15,13 @@ class RiddlesSeeder extends Seeder
         DB::table('riddles')->truncate();
         $faker = Faker::create();
 
+        
+        
         // mootse : ligne seule
         DB::table('riddles')->insert([
             'id' => 1,
             'name' => 'L\'Amphithéâtre',
             'description' => 'Connectez-vous à l\'intranet.',
-            'post_resolution_message' => 'Bravo !!!',
             'url' => 'http://51.75.126.46/html/escapegameTSE/Mooste/index.html',
             'code' => 0,
             'line' => 1
@@ -30,11 +31,12 @@ class RiddlesSeeder extends Seeder
         DB::table('riddles')->insert([
             'id' => 2,
             'name' => 'CM Images et numérique en Newsplex',
+            'post_resolution_message' => '!!! Snap de Théo !!!',
             'description' => 'Trouvez les lettres cachées',
             'url' => null,
             'code' => 0,
             'line' => 2
-        ]);
+        ]);        
 
         DB::table('riddles')->insert([
             'id' => 3,
@@ -43,7 +45,8 @@ class RiddlesSeeder extends Seeder
             'url' => null,
             'code' => 0,
             'line' => 2
-        ]);
+        ]);        
+        
         DB::table('riddles')->insert([
             'id' => 4,
             'name' => 'TD synthèse d\'image en A119 (Bâtiment A)',
@@ -52,11 +55,13 @@ class RiddlesSeeder extends Seeder
             'code' => 0,
             'line' => 2
         ]);
+        
         DB::table('riddles')->insert([
             'id' => 5,
             'name' => 'Rendez-vous à l\'administration',
             'description' => 'Trouvez les lettres cachées',
-            'url' => null,
+            'post_resolution_message' => '!!! Snap de Théo !!!',
+            'url' => null,            
             'code' => 0,
             'line' => 2
         ]);
@@ -84,7 +89,7 @@ class RiddlesSeeder extends Seeder
 
         // embranchement 2 : la cité du design
         DB::table('riddles')->insert([
-            'id' => 8,
+            'id' => 8, // pour les bleus
             'name' => 'La Tour', // + arcade (détecteur de distance)
             'description' => 'Trouvez une partie du numéro de Théo',
             'url' => null,
@@ -92,18 +97,66 @@ class RiddlesSeeder extends Seeder
             'line' => 4
         ]);
         DB::table('riddles')->insert([
-            'id' => 9,
+            'id' => 9, // pour les bleus
+            'name' => 'Le Mixeur', // carré magique
+            'description' => 'Trouvez une partie du numéro de Théo',
+            'post_resolution_message' => 'Vous avez reçu un nouveau message de Théo. Composez le 06 XX 78 XX 11 pour l\'écouter.',
+            'url' => 'http://51.75.126.46/html/escapegameTSE/CarreMagique/',
+            'code' => 0,
+            'line' => 4
+        ]);
+        
+        DB::table('riddles')->insert([
+            'id' => 88, // pour les verts
+            'name' => 'La Tour', // + arcade (détecteur de distance)
+            'description' => 'Trouvez une partie du numéro de Théo',
+            'post_resolution_message' => 'Vous avez reçu un nouveau message de Théo. Composez le 06 XX 78 XX 11 pour l\'écouter.',
+            'url' => null,
+            'code' => 0,
+            'line' => 4
+        ]);
+        DB::table('riddles')->insert([
+            'id' => 99, // pour les verts
             'name' => 'Le Mixeur', // carré magique
             'description' => 'Trouvez une partie du numéro de Théo',
             'url' => 'http://51.75.126.46/html/escapegameTSE/CarreMagique/',
             'code' => 0,
             'line' => 4
         ]);
+        
+        
         DB::table('riddles')->insert([
-            'id' => 10,
+            'id' => 10, // pour les jaunes
             'name' => 'La Fabrique de l\'Innovation', // code source
             'description' => 'Trouvez une partie du numéro de Théo',
             'url' => 'http://51.75.126.46/html/escapegameTSE/public/codesource',
+            'code' => 0,
+            'line' => 4
+        ]);
+        DB::table('riddles')->insert([
+            'id' => 888, // pour les jaunes
+            'name' => 'La Tour', // + arcade (détecteur de distance)
+            'description' => 'Trouvez une partie du numéro de Théo',
+            'post_resolution_message' => 'Vous avez reçu un nouveau message de Théo. Composez le 06 65 XX XX 11 pour l\'écouter.',
+            'url' => null,
+            'code' => 0,
+            'line' => 4
+        ]);
+        
+        DB::table('riddles')->insert([
+            'id' => 100, // pour les rouges
+            'name' => 'La Fabrique de l\'Innovation', // code source
+            'description' => 'Trouvez une partie du numéro de Théo',
+            'post_resolution_message' => 'Vous avez reçu un nouveau message de Théo. Composez le 06 65 XX XX 11 pour l\'écouter.',
+            'url' => 'http://51.75.126.46/html/escapegameTSE/public/codesource',
+            'code' => 0,
+            'line' => 4
+        ]);
+        DB::table('riddles')->insert([
+            'id' => 8888, // pour les rouges
+            'name' => 'La Tour', // + arcade (détecteur de distance)
+            'description' => 'Trouvez une partie du numéro de Théo',            
+            'url' => null,
             'code' => 0,
             'line' => 4
         ]);
@@ -127,29 +180,6 @@ class RiddlesSeeder extends Seeder
             'code' => 0,
             'line' => 6
         ]);
-        DB::table('riddles')->insert([
-            'id' => 13,
-            'name' => 'D004',
-            'description' => 'Retrouvez enfin Théo !',
-            'url' => null,
-            'code' => 0,
-            'line' => 6
-        ]);
-        DB::table('riddles')->insert([
-            'id' => 14,
-            'name' => 'D005',
-            'description' => 'Retrouvez enfin Théo !',
-            'url' => null,
-            'code' => 0,
-            'line' => 6
-        ]);
-        DB::table('riddles')->insert([
-            'id' => 15,
-            'name' => 'D006',
-            'description' => 'Retrouvez enfin Théo !',
-            'url' => null,
-            'code' => 0,
-            'line' => 6
-        ]);
+
     }
 }

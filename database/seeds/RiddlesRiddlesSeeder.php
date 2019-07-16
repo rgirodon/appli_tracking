@@ -81,11 +81,33 @@ class RiddlesRiddlesSeeder extends Seeder
         ]);
         DB::table('riddles_riddles')->insert([
             'parent_id' => 7,
+            'child_id' => 88
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 7,
+            'child_id' => 888
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 7,
+            'child_id' => 8888
+        ]);
+        
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 7,
             'child_id' => 9
         ]);
         DB::table('riddles_riddles')->insert([
             'parent_id' => 7,
+            'child_id' => 99
+        ]);
+        
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 7,
             'child_id' => 10
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 7,
+            'child_id' => 100
         ]);
 
         // fusion de l'embranchement 2 : téléphone
@@ -94,11 +116,33 @@ class RiddlesRiddlesSeeder extends Seeder
             'child_id' => 11
         ]);
         DB::table('riddles_riddles')->insert([
+            'parent_id' => 8,
+            'child_id' => 11
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 888,
+            'child_id' => 11
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 8888,
+            'child_id' => 11
+        ]);
+        
+        DB::table('riddles_riddles')->insert([
             'parent_id' => 9,
             'child_id' => 11
         ]);
         DB::table('riddles_riddles')->insert([
+            'parent_id' => 99,
+            'child_id' => 11
+        ]);
+        
+        DB::table('riddles_riddles')->insert([
             'parent_id' => 10,
+            'child_id' => 11
+        ]);
+        DB::table('riddles_riddles')->insert([
+            'parent_id' => 100,
             'child_id' => 11
         ]);
 
@@ -106,18 +150,6 @@ class RiddlesRiddlesSeeder extends Seeder
         DB::table('riddles_riddles')->insert([
             'parent_id' => 11,
             'child_id' => 12
-        ]);
-        DB::table('riddles_riddles')->insert([
-            'parent_id' => 11,
-            'child_id' => 13
-        ]);
-        DB::table('riddles_riddles')->insert([
-            'parent_id' => 11,
-            'child_id' => 14
-        ]);
-        DB::table('riddles_riddles')->insert([
-            'parent_id' => 11,
-            'child_id' => 15
         ]);
     }
 }

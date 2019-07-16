@@ -55,42 +55,49 @@ class ParcoursSeeder extends Seeder
                     'riddle_id' => 7
                 ]);
                 
-                // mixeur
-                DB::table('parcours')->insert([
-                    'team_id' => $color->base + $number,
-                    'riddle_id' => 9
-                ]);
+                // specifique bleu
+                if ($color->name == 'Bleu') {
+                    
+                    // mixeur
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 9
+                    ]);
                 
-                // tour
-                DB::table('parcours')->insert([
-                    'team_id' => $color->base + $number,
-                    'riddle_id' => 8
-                ]);
+                    // tour
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 8
+                    ]);
+                }
+                
+                // specifique vert
+                if ($color->name == 'Vert') {
+                    
+                    // mixeur
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 99
+                    ]);
+                    
+                    // tour
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 88
+                    ]);
+                }
                 
                 // numero
                 DB::table('parcours')->insert([
                     'team_id' => $color->base + $number,
                     'riddle_id' => 11
                 ]);
-                
-                // bleu D003
-                if ($color->name == 'Bleu') {
                     
-                    DB::table('parcours')->insert([
-                        'team_id' => $color->base + $number,
-                        'riddle_id' => 12
-                    ]);
-                }
-                
-                
-                // vert D0004
-                if ($color->name == 'Vert') {
-                    
-                    DB::table('parcours')->insert([
-                        'team_id' => $color->base + $number,
-                        'riddle_id' => 13
-                    ]);
-                }
+                // D003
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 12
+                ]);
             }
         }
         
@@ -125,17 +132,37 @@ class ParcoursSeeder extends Seeder
                     'riddle_id' => 7
                 ]);
                 
-                // fablab
-                DB::table('parcours')->insert([
-                    'team_id' => $color->base + $number,
-                    'riddle_id' => 10
-                ]);
+                // specifique jaune
+                if ($color->name == 'Jaune') {
                 
-                // tour
-                DB::table('parcours')->insert([
-                    'team_id' => $color->base + $number,
-                    'riddle_id' => 8
-                ]);
+                    // fablab
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 10
+                    ]);
+                    
+                    // tour
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 888
+                    ]);
+                }
+                
+                // specifique rouge
+                if ($color->name == 'Rouge') {
+                    
+                    // fablab
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 100
+                    ]);
+                    
+                    // tour
+                    DB::table('parcours')->insert([
+                        'team_id' => $color->base + $number,
+                        'riddle_id' => 8888
+                    ]);
+                }
                 
                 // numero
                 DB::table('parcours')->insert([
@@ -143,24 +170,10 @@ class ParcoursSeeder extends Seeder
                     'riddle_id' => 11
                 ]);
                 
-                // jaune D005
-                if ($color->name == 'Jaune') {
-                    
-                    DB::table('parcours')->insert([
-                        'team_id' => $color->base + $number,
-                        'riddle_id' => 14
-                    ]);
-                }
-                
-                
-                // rouge D0006
-                if ($color->name == 'Rouge') {
-                    
-                    DB::table('parcours')->insert([
-                        'team_id' => $color->base + $number,
-                        'riddle_id' => 15
-                    ]);
-                }
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 12
+                ]);
             }
         }
     }
