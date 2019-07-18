@@ -24,6 +24,10 @@ class ParcoursSeeder extends Seeder
 
         ];
         
+        $colorsViolet= [
+            (object)array("name" => "Violet", "base" => 500),
+        ];
+        
         $numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         
         // parcours bleu vert
@@ -170,6 +174,62 @@ class ParcoursSeeder extends Seeder
                     'riddle_id' => 11
                 ]);
                 
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 12
+                ]);
+            }
+        }
+        
+        
+        // parcours violet
+        foreach ($colorsViolet as $color) {
+            
+            foreach($numbers as $number) {
+                
+                // amphitheatre
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 1
+                ]);
+                
+                // newsplex
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 2
+                ]);
+                
+                // admin
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 5
+                ]);
+                
+                // cours des matieres
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 7
+                ]);
+                    
+                // mixeur
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 9
+                ]);
+                
+                // fab lab
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 10
+                ]);
+                
+                // numero
+                DB::table('parcours')->insert([
+                    'team_id' => $color->base + $number,
+                    'riddle_id' => 11
+                ]);
+                
+                // D003
                 DB::table('parcours')->insert([
                     'team_id' => $color->base + $number,
                     'riddle_id' => 12
