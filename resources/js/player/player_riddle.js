@@ -158,7 +158,7 @@ class PlayerRiddle {
     }
     
     setPostResolutionMessage(str) {
-        this.root.find('.card-post-resolution-message').text(str);        
+        this.root.find('.card-post-resolution-message').html(str);        
     }
     
     showPostResolutionMessage() {
