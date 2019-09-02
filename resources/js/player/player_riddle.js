@@ -71,12 +71,19 @@ class PlayerRiddle {
             playerRiddleGrid.start();
         });
 
+        $('#validation-modal').on('show.bs.modal', function (e) {
+        	
+        	$('#validation-modal-code').val('');
+    	})
+        
         //  validate button modifies the modal when clicking
         this.root.find('.validate-button').click(() => {
             const modal = $('#validation-modal');
             modal.find('.modal-title').text('Validez ' + this.root.find('.card-title').text() + '\u00A0:');
             const form = modal.find('form');
+            
             form.off('submit');
+            
             form.on('submit', (e) => {
                 e.preventDefault();
                 if (form.find('#validation-modal-code').val()) {

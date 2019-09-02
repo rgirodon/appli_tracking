@@ -31,7 +31,7 @@ class RiddlesSeeder extends Seeder
         DB::table('riddles')->insert([
             'id' => 2,
             'name' => 'CM Images et numérique en Newsplex',
-            'post_resolution_message' => '!!! Snap de Théo !!!',
+            'post_resolution_message' => 'Vous avez reçu un Snap de Théo ! <a href="https://youtu.be/8xkPcRLftHY" target="_new">Cliquez ici</a>',
             'description' => 'Trouvez les lettres cachées',
             'url' => null,
             'code' => 0,
@@ -60,7 +60,7 @@ class RiddlesSeeder extends Seeder
             'id' => 5,
             'name' => 'Rendez-vous à l\'administration',
             'description' => 'Trouvez les lettres cachées',
-            'post_resolution_message' => '!!! Snap de Théo !!!',
+            'post_resolution_message' => 'Vous avez reçu un Snap de Théo ! <a href="https://youtu.be/8xkPcRLftHY" target="_new">Cliquez ici</a>',
             'url' => null,            
             'code' => 0,
             'line' => 2
